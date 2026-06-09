@@ -182,8 +182,8 @@
       },
       {
         prompt: "You're Black in a Hippo. You played ...Nd7 and want to push ...f5 to break open the kingside. What should CCT catch here?",
-        fen: "r3q1rk1/1bpppbbp/pp1npnpp/8/3PP3/2N2N2/PPP2PPP/R2BQ1RK1 b - - 0 1",
-        caption: "Black to move — considering ...f5",
+        fen: "r2q1rk1/1bpnnpb1/pp1pp1pp/8/3PP3/2N2N2/PPP2PPP/R1BQ1R1K b - - 0 1",
+        caption: "Black to move — Hippo setup, f7 pawn ready to push ...f5",
         orientation: "black",
         options: [
           { text: "Whether ...f5 weakens e6 or opens the e-file against my king", correct: true },
@@ -230,12 +230,16 @@
         <div class="feedback" id="feedback"></div>
       `;
       if (q.fen) {
-        board = Chessboard('board', {
-          position: q.fen,
-          orientation: q.orientation || 'white',
-          draggable: false,
-          showNotation: true,
-          pieceTheme: '../assets/chesspieces/wikipedia/{piece}.png'
+        // Defer init so the board container has layout after innerHTML swap
+        requestAnimationFrame(() => {
+          board = Chessboard('board', {
+            position: q.fen,
+            orientation: q.orientation || 'white',
+            draggable: false,
+            showNotation: true,
+            pieceTheme: '../assets/chesspieces/wikipedia/{piece}.png'
+          });
+          board.resize();
         });
       }
       const optionsEl = document.getElementById('options');
