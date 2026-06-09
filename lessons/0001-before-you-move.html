@@ -51,16 +51,18 @@
       margin: 1rem 0;
     }
     .mnemonic span { color: var(--accent); }
-    .board {
-      font-family: "SF Mono", "Consolas", monospace;
-      font-size: 0.85rem;
-      line-height: 1.35;
-      background: #f0ebe3;
-      padding: 1rem;
-      border-radius: 6px;
-      overflow-x: auto;
-      white-space: pre;
-      margin: 1rem 0;
+    .board-wrap {
+      max-width: 360px;
+      margin: 1rem auto 1.25rem;
+    }
+    .board-caption {
+      text-align: center;
+      font-size: 0.9rem;
+      color: var(--muted);
+      margin-bottom: 0.5rem;
+    }
+    #board {
+      width: 100%;
     }
     .quiz-question { font-weight: 600; margin-bottom: 1rem; }
     .options { display: flex; flex-direction: column; gap: 0.5rem; }
@@ -160,21 +162,17 @@
     <strong>Questions?</strong> Ask your teacher in chat — paste a position, a game link, or describe a blunder you just made. That's what they're for.
   </p>
 
+  <link rel="stylesheet" href="https://unpkg.com/@chrisoakman/chessboardjs@1.0.0/dist/chessboard-1.0.0.min.css">
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+  <script src="https://unpkg.com/@chrisoakman/chessboardjs@1.0.0/dist/chessboard-1.0.0.min.js"></script>
+
   <script>
     const quizzes = [
       {
         prompt: "You're White. You want to play Bxh7+ to attack the black king. Before you click — what's the most important CCT question?",
-        board: `  +---+---+---+---+---+---+---+---+
-8 | r |   | b | q |   | r | k |   |
-7 | p | p | p | p | p | p | b | p |
-6 |   |   | n |   |   | n |   |   |
-5 |   |   |   |   |   |   |   |   |
-4 |   |   |   |   | P |   |   |   |
-3 |   |   |   |   |   |   | B |   |
-2 | P | P | P | P |   | P | P | P |
-1 | R | N | B | Q |   | R | K |   |
-  +---+---+---+---+---+---+---+---+
-    a   b   c   d   e   f   g   h`,
+        fen: "r1bq1rk1/ppppppbp/2n2n2/8/4P3/5B2/PPPP1PPP/RNBQ1RK1 w - - 0 1",
+        caption: "White to move — bishop on f3 eyes h7",
+        orientation: "white",
         options: [
           { text: "Can Black capture my bishop on h7 after the check?", correct: false },
           { text: "After Bxh7+, can Black's king escape safely — and can Black recapture or counterattack?", correct: true },
@@ -184,17 +182,9 @@
       },
       {
         prompt: "You're Black in a Hippo. You played ...Nd7 and want to push ...f5 to break open the kingside. What should CCT catch here?",
-        board: `  +---+---+---+---+---+---+---+---+
-8 | r |   |   | q |   | r | k |   |
-7 |   | b | p | p | p | p | b | p |
-6 | p | p |   | n | p | n | p | p |
-5 |   |   |   |   |   |   |   |   |
-4 |   |   |   | P | P |   |   |   |
-3 |   |   | N |   |   | N |   |   |
-2 | P | P | P |   |   | P | P | P |
-1 | R |   | B | Q |   | R |   | K |
-  +---+---+---+---+---+---+---+---+
-    a   b   c   d   e   f   g   h`,
+        fen: "r3q1rk1/1bpppbbp/pp1npnpp/8/3PP3/2N2N2/PPP2PPP/R2BQ1RK1 b - - 0 1",
+        caption: "Black to move — considering ...f5",
+        orientation: "black",
         options: [
           { text: "Whether ...f5 weakens e6 or opens the e-file against my king", correct: true },
           { text: "Whether my rook on a8 can reach a5 in one move", correct: false },
@@ -204,7 +194,7 @@
       },
       {
         prompt: "You're low on time (45 seconds left). You see a good move quickly. What do strong players still do?",
-        board: null,
+        fen: null,
         options: [
           { text: "Skip checking — speed matters more than accuracy now", correct: false },
           { text: "A 2–3 second CCT scan on every move, especially before captures and checks", correct: true },
@@ -215,17 +205,39 @@
     ];
 
     let current = 0;
+    let board = null;
+
+    function destroyBoard() {
+      if (board) {
+        board.destroy();
+        board = null;
+      }
+    }
 
     function renderQuiz() {
       const q = quizzes[current];
+      destroyBoard();
       document.getElementById('progress').textContent = `Question ${current + 1} of ${quizzes.length}`;
       const container = document.getElementById('quiz-container');
       container.innerHTML = `
         <p class="quiz-question">${q.prompt}</p>
-        ${q.board ? `<div class="board">${q.board}</div>` : ''}
+        ${q.fen ? `
+          <div class="board-wrap">
+            <p class="board-caption">${q.caption || ''}</p>
+            <div id="board"></div>
+          </div>` : ''}
         <div class="options" id="options"></div>
         <div class="feedback" id="feedback"></div>
       `;
+      if (q.fen) {
+        board = Chessboard('board', {
+          position: q.fen,
+          orientation: q.orientation || 'white',
+          draggable: false,
+          showNotation: true,
+          pieceTheme: '../assets/chesspieces/wikipedia/{piece}.png'
+        });
+      }
       const optionsEl = document.getElementById('options');
       q.options.forEach((opt, i) => {
         const btn = document.createElement('button');
