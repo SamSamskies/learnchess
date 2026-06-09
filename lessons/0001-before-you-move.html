@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lesson 1 — Before You Move</title>
+  <style>
+    :root {
+      --bg: #faf8f5;
+      --ink: #1a1a1a;
+      --accent: #2d5a27;
+      --accent-light: #eef4ec;
+      --wrong: #8b2942;
+      --wrong-bg: #fdf0f3;
+      --right: #1e5631;
+      --right-bg: #edf7f0;
+      --muted: #5c5c5c;
+      --card: #fff;
+      --border: #e0dcd4;
+    }
+    * { box-sizing: border-box; }
+    body {
+      font-family: "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif;
+      background: var(--bg);
+      color: var(--ink);
+      line-height: 1.6;
+      max-width: 44rem;
+      margin: 0 auto;
+      padding: 2rem 1.25rem 4rem;
+    }
+    h1 { font-size: 2rem; font-weight: 600; line-height: 1.2; margin-bottom: 0.5rem; }
+    .meta { color: var(--muted); font-size: 0.9rem; margin-bottom: 2rem; }
+    h2 { font-size: 1.25rem; margin: 2rem 0 0.75rem; color: var(--accent); }
+    p { margin: 0 0 1rem; }
+    a { color: var(--accent); }
+    .card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 1.5rem;
+      margin: 1.25rem 0;
+    }
+    .mnemonic {
+      text-align: center;
+      font-size: 1.5rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      padding: 1.25rem;
+      background: var(--accent-light);
+      border-radius: 8px;
+      margin: 1rem 0;
+    }
+    .mnemonic span { color: var(--accent); }
+    .board {
+      font-family: "SF Mono", "Consolas", monospace;
+      font-size: 0.85rem;
+      line-height: 1.35;
+      background: #f0ebe3;
+      padding: 1rem;
+      border-radius: 6px;
+      overflow-x: auto;
+      white-space: pre;
+      margin: 1rem 0;
+    }
+    .quiz-question { font-weight: 600; margin-bottom: 1rem; }
+    .options { display: flex; flex-direction: column; gap: 0.5rem; }
+    button.option {
+      font-family: inherit;
+      font-size: 1rem;
+      text-align: left;
+      padding: 0.75rem 1rem;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      background: var(--card);
+      cursor: pointer;
+      transition: border-color 0.15s, background 0.15s;
+    }
+    button.option:hover:not(:disabled) { border-color: var(--accent); background: var(--accent-light); }
+    button.option:disabled { cursor: default; }
+    button.option.correct { border-color: var(--right); background: var(--right-bg); }
+    button.option.incorrect { border-color: var(--wrong); background: var(--wrong-bg); }
+    .feedback {
+      margin-top: 1rem;
+      padding: 1rem;
+      border-radius: 6px;
+      display: none;
+    }
+    .feedback.show { display: block; }
+    .feedback.good { background: var(--right-bg); border-left: 4px solid var(--right); }
+    .feedback.bad { background: var(--wrong-bg); border-left: 4px solid var(--wrong); }
+    .homework {
+      background: #fff9e6;
+      border: 1px solid #e8d9a8;
+      border-radius: 10px;
+      padding: 1.5rem;
+      margin: 2rem 0;
+    }
+    .homework h2 { margin-top: 0; color: #7a5c00; }
+    .cite { font-size: 0.85rem; color: var(--muted); }
+    .progress { font-size: 0.9rem; color: var(--muted); margin-bottom: 1rem; }
+    .teacher-note {
+      border-top: 1px solid var(--border);
+      margin-top: 2.5rem;
+      padding-top: 1.5rem;
+      font-size: 0.95rem;
+      color: var(--muted);
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Before You Move</h1>
+  <p class="meta">Lesson 1 · ~15 minutes · Skill: the CCT safety check</p>
+
+  <p>You play every day. You review your games. You still blunder. That usually means one thing: <strong>the mistake happens before you move</strong>, not because you lack chess knowledge.</p>
+
+  <p>This lesson teaches one habit — used by strong players under time pressure — that takes about 5–10 seconds and catches most one-move blunders. It connects directly to your mission: fewer thrown games, better Duolingo results, and more patience in cramped Hippo positions where one slip collapses everything.</p>
+
+  <h2>The habit: CCT</h2>
+
+  <div class="mnemonic"><span>C</span> · <span>C</span> · <span>T</span></div>
+  <p style="text-align:center; margin-bottom:1.5rem;"><strong>Checks · Captures · Threats</strong></p>
+
+  <p>After you choose a move — but <em>before</em> you click it — ask what your opponent can do on their next turn:</p>
+
+  <ol>
+    <li><strong>Checks</strong> — Can they give check? If yes, is my king safe after?</li>
+    <li><strong>Captures</strong> — Can they take a piece or pawn I left hanging?</li>
+    <li><strong>Threats</strong> — Can they fork, pin, skewer, or threaten mate in one?</li>
+  </ol>
+
+  <p>This is not deep calculation. It's a <strong>safety scan</strong>. Research on chess improvement consistently shows that structured, feedback-driven practice beats passive study — and in your games, the fastest feedback is not losing the piece you just hung. <span class="cite">(<a href="https://d-nb.info/1248464257/34">deliberate practice study</a>)</span></p>
+
+  <p>Keep a printed copy handy: <a href="../reference/move-check.html">Move Check reference card</a>.</p>
+
+  <h2>Practice: spot the blunder waiting to happen</h2>
+  <p class="progress" id="progress">Question 1 of 3</p>
+
+  <div class="card" id="quiz-container">
+    <!-- filled by JS -->
+  </div>
+
+  <div class="homework">
+    <h2>Your homework (next 3 games)</h2>
+    <ol>
+      <li>Before every move on Duolingo or Lichess, whisper <strong>"checks, captures, threats"</strong> once.</li>
+      <li>After each game, find <strong>one blunder</strong> and write: <em>"I moved ___. I didn't check for ___."</em></li>
+      <li>Bring that note back to your teacher — we'll see if the pattern is tactics, time, or Hippo-specific.</li>
+    </ol>
+  </div>
+
+  <h2>Why this comes before Hippo theory</h2>
+  <p>The Hippo rewards patience — you wait behind your pawn wall while White figures out how to attack. But cramped positions are unforgiving: one loose piece and the position "collapses" <span class="cite">(<a href="https://chess.stackexchange.com/questions/12347/whats-the-best-strategy-against-the-hippo">common anti-Hippo strategy</a>)</span>. CCT is the seatbelt for that style.</p>
+
+  <p>Lesson 2 will cover <strong>clock budgeting for 10+5</strong> — how to save time in your Hippo setup so you still have minutes when the real fight starts.</p>
+
+  <p class="cite">Sources: <a href="https://chessgoals.com/how-to-kill-your-time-trouble/">ChessGoals on time trouble</a> · <a href="https://jdchess.com/en/blog/how-strong-players-manage-the-clock">JD Chess on clock management</a></p>
+
+  <p class="teacher-note">
+    <strong>Questions?</strong> Ask your teacher in chat — paste a position, a game link, or describe a blunder you just made. That's what they're for.
+  </p>
+
+  <script>
+    const quizzes = [
+      {
+        prompt: "You're White. You want to play Bxh7+ to attack the black king. Before you click — what's the most important CCT question?",
+        board: `  +---+---+---+---+---+---+---+---+
+8 | r |   | b | q |   | r | k |   |
+7 | p | p | p | p | p | p | b | p |
+6 |   |   | n |   |   | n |   |   |
+5 |   |   |   |   |   |   |   |   |
+4 |   |   |   |   | P |   |   |   |
+3 |   |   |   |   |   |   | B |   |
+2 | P | P | P | P |   | P | P | P |
+1 | R | N | B | Q |   | R | K |   |
+  +---+---+---+---+---+---+---+---+
+    a   b   c   d   e   f   g   h`,
+        options: [
+          { text: "Can Black capture my bishop on h7 after the check?", correct: false },
+          { text: "After Bxh7+, can Black's king escape safely — and can Black recapture or counterattack?", correct: true },
+          { text: "Is my pawn on a2 defended?", correct: false }
+        ],
+        explain: "Sacrifices need the full CCT scan. After Bxh7+, check: where does the king go? Can Black take back or threaten your queen? One missed capture or threat turns a brilliant attack into a free bishop."
+      },
+      {
+        prompt: "You're Black in a Hippo. You played ...Nd7 and want to push ...f5 to break open the kingside. What should CCT catch here?",
+        board: `  +---+---+---+---+---+---+---+---+
+8 | r |   |   | q |   | r | k |   |
+7 |   | b | p | p | p | p | b | p |
+6 | p | p |   | n | p | n | p | p |
+5 |   |   |   |   |   |   |   |   |
+4 |   |   |   | P | P |   |   |   |
+3 |   |   | N |   |   | N |   |   |
+2 | P | P | P |   |   | P | P | P |
+1 | R |   | B | Q |   | R |   | K |
+  +---+---+---+---+---+---+---+---+
+    a   b   c   d   e   f   g   h`,
+        options: [
+          { text: "Whether ...f5 weakens e6 or opens the e-file against my king", correct: true },
+          { text: "Whether my rook on a8 can reach a5 in one move", correct: false },
+          { text: "Whether White's queen is on d1", correct: false }
+        ],
+        explain: "Pawn breaks are classic 'Threat' moments. ...f5 may look active, but CCT asks: what new squares does White get? A queen on h5, a knight on e5, or a rook on the e-file can punish you faster than your break helps."
+      },
+      {
+        prompt: "You're low on time (45 seconds left). You see a good move quickly. What do strong players still do?",
+        board: null,
+        options: [
+          { text: "Skip checking — speed matters more than accuracy now", correct: false },
+          { text: "A 2–3 second CCT scan on every move, especially before captures and checks", correct: true },
+          { text: "Spend all remaining time on one move to guarantee it's best", correct: false }
+        ],
+        explain: "Under time pressure, the goal is avoiding instant blunders, not finding the engine's top move. A brief CCT prevents the flags-and-blunders double loss that likely hurts your Duolingo rating. Save deep thinks for earlier — we'll cover that in Lesson 2."
+      }
+    ];
+
+    let current = 0;
+
+    function renderQuiz() {
+      const q = quizzes[current];
+      document.getElementById('progress').textContent = `Question ${current + 1} of ${quizzes.length}`;
+      const container = document.getElementById('quiz-container');
+      container.innerHTML = `
+        <p class="quiz-question">${q.prompt}</p>
+        ${q.board ? `<div class="board">${q.board}</div>` : ''}
+        <div class="options" id="options"></div>
+        <div class="feedback" id="feedback"></div>
+      `;
+      const optionsEl = document.getElementById('options');
+      q.options.forEach((opt, i) => {
+        const btn = document.createElement('button');
+        btn.className = 'option';
+        btn.textContent = opt.text;
+        btn.onclick = () => answer(i);
+        optionsEl.appendChild(btn);
+      });
+    }
+
+    function answer(i) {
+      const q = quizzes[current];
+      const buttons = document.querySelectorAll('.option');
+      const feedback = document.getElementById('feedback');
+      buttons.forEach((btn, j) => {
+        btn.disabled = true;
+        if (q.options[j].correct) btn.classList.add('correct');
+        else if (j === i) btn.classList.add('incorrect');
+      });
+      const ok = q.options[i].correct;
+      feedback.className = 'feedback show ' + (ok ? 'good' : 'bad');
+      feedback.innerHTML = (ok ? '✓ Correct. ' : '✗ Not quite. ') + q.explain +
+        (current < quizzes.length - 1
+          ? ' <br><br><button onclick="nextQuiz()" style="margin-top:0.75rem;font-family:inherit;padding:0.5rem 1rem;cursor:pointer;">Next question →</button>'
+          : ' <br><br><strong>Lesson complete.</strong> Play 3 games with CCT, then tell your teacher how it went.');
+    }
+
+    function nextQuiz() {
+      current++;
+      renderQuiz();
+    }
+
+    renderQuiz();
+  </script>
+</body>
+</html>

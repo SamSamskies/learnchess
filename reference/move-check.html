@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Move Check — Quick Reference</title>
+  <style>
+    :root {
+      --bg: #faf8f5;
+      --ink: #1a1a1a;
+      --accent: #2d5a27;
+      --muted: #5c5c5c;
+      --card: #fff;
+      --border: #e0dcd4;
+    }
+    * { box-sizing: border-box; }
+    body {
+      font-family: "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif;
+      background: var(--bg);
+      color: var(--ink);
+      line-height: 1.55;
+      max-width: 42rem;
+      margin: 0 auto;
+      padding: 2rem 1.25rem 3rem;
+    }
+    h1 { font-size: 1.75rem; font-weight: 600; margin-bottom: 0.25rem; }
+    .subtitle { color: var(--muted); font-size: 0.95rem; margin-bottom: 2rem; }
+    .card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 1.25rem 1.5rem;
+      margin-bottom: 1.25rem;
+    }
+    h2 { font-size: 1.1rem; margin: 0 0 0.75rem; color: var(--accent); }
+    ol { margin: 0; padding-left: 1.25rem; }
+    li { margin-bottom: 0.5rem; }
+    .mnemonic {
+      font-size: 1.35rem;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      text-align: center;
+      padding: 1rem;
+      background: #eef4ec;
+      border-radius: 6px;
+      margin-bottom: 1rem;
+    }
+    .mnemonic span { color: var(--accent); }
+    .footer { font-size: 0.85rem; color: var(--muted); margin-top: 2rem; }
+    @media print {
+      body { background: white; }
+      .card { break-inside: avoid; }
+    }
+  </style>
+</head>
+<body>
+  <h1>Before You Move</h1>
+  <p class="subtitle">Print this. Tape it next to your screen.</p>
+
+  <div class="card">
+    <div class="mnemonic"><span>C</span> · <span>C</span> · <span>T</span></div>
+    <p style="text-align:center; margin:0 0 1rem;"><strong>Checks · Captures · Threats</strong></p>
+    <p>After you pick a move, pause. Ask what your opponent can do <em>next</em>:</p>
+    <ol>
+      <li><strong>Checks</strong> — Can they give check? Where does my king go?</li>
+      <li><strong>Captures</strong> — Can they take something? Is what I left undefended?</li>
+      <li><strong>Threats</strong> — Can they fork, pin, or threaten mate in one?</li>
+    </ol>
+  </div>
+
+  <div class="card">
+    <h2>When to use it</h2>
+    <ul style="margin:0; padding-left:1.25rem;">
+      <li>Every move in Duolingo (10 min — no time to recover)</li>
+      <li>Every move once you're below 2 minutes on the clock</li>
+      <li>Always before captures, checks, and pawn pushes</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h2>When to skip the deep think</h2>
+    <ul style="margin:0; padding-left:1.25rem;">
+      <li>Obvious recaptures — still do a 2-second CCT</li>
+      <li>Known opening moves in your Hippo setup</li>
+      <li>Forced replies when only one legal move exists</li>
+    </ul>
+  </div>
+
+  <p class="footer">Part of the <a href="../lessons/0001-before-you-move.html">Lesson 1</a> series · <a href="../MISSION.md">Mission</a></p>
+</body>
+</html>
