@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lesson 2 — Clock Budgeting</title>
+  <style>
+    :root {
+      --bg: #faf8f5;
+      --ink: #1a1a1a;
+      --accent: #2d5a27;
+      --accent-light: #eef4ec;
+      --wrong: #8b2942;
+      --wrong-bg: #fdf0f3;
+      --right: #1e5631;
+      --right-bg: #edf7f0;
+      --muted: #5c5c5c;
+      --card: #fff;
+      --border: #e0dcd4;
+      --warn: #7a5c00;
+      --warn-bg: #fff9e6;
+    }
+    * { box-sizing: border-box; }
+    body {
+      font-family: "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif;
+      background: var(--bg);
+      color: var(--ink);
+      line-height: 1.6;
+      max-width: 44rem;
+      margin: 0 auto;
+      padding: 2rem 1.25rem 4rem;
+    }
+    h1 { font-size: 2rem; font-weight: 600; line-height: 1.2; margin-bottom: 0.5rem; }
+    .meta { color: var(--muted); font-size: 0.9rem; margin-bottom: 2rem; }
+    h2 { font-size: 1.25rem; margin: 2rem 0 0.75rem; color: var(--accent); }
+    p { margin: 0 0 1rem; }
+    a { color: var(--accent); }
+    .card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 1.5rem;
+      margin: 1.25rem 0;
+    }
+    .speed-grid {
+      display: grid;
+      gap: 0.75rem;
+      margin: 1rem 0;
+    }
+    .speed {
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 1rem 1.15rem;
+      background: var(--card);
+    }
+    .speed strong {
+      display: block;
+      font-size: 1.05rem;
+      color: var(--accent);
+      margin-bottom: 0.25rem;
+    }
+    .speed .time {
+      float: right;
+      font-size: 0.85rem;
+      color: var(--muted);
+      font-weight: 600;
+    }
+    .checkpoint {
+      background: var(--warn-bg);
+      border: 1px solid #e8d9a8;
+      border-radius: 10px;
+      padding: 1.25rem 1.5rem;
+      margin: 1.25rem 0;
+      text-align: center;
+    }
+    .checkpoint .big {
+      font-size: 1.75rem;
+      font-weight: 700;
+      color: var(--warn);
+      margin: 0.25rem 0;
+    }
+    .board-wrap {
+      max-width: 360px;
+      margin: 1rem auto 1.25rem;
+    }
+    .board-caption {
+      text-align: center;
+      font-size: 0.9rem;
+      color: var(--muted);
+      margin-bottom: 0.5rem;
+    }
+    #board { width: 100%; }
+    .quiz-question { font-weight: 600; margin-bottom: 1rem; }
+    .options { display: flex; flex-direction: column; gap: 0.5rem; }
+    button.option {
+      font-family: inherit;
+      font-size: 1rem;
+      text-align: left;
+      padding: 0.75rem 1rem;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      background: var(--card);
+      cursor: pointer;
+      transition: border-color 0.15s, background 0.15s;
+    }
+    button.option:hover:not(:disabled) { border-color: var(--accent); background: var(--accent-light); }
+    button.option:disabled { cursor: default; }
+    button.option.correct { border-color: var(--right); background: var(--right-bg); }
+    button.option.incorrect { border-color: var(--wrong); background: var(--wrong-bg); }
+    .feedback {
+      margin-top: 1rem;
+      padding: 1rem;
+      border-radius: 6px;
+      display: none;
+    }
+    .feedback.show { display: block; }
+    .feedback.good { background: var(--right-bg); border-left: 4px solid var(--right); }
+    .feedback.bad { background: var(--wrong-bg); border-left: 4px solid var(--wrong); }
+    .homework {
+      background: var(--warn-bg);
+      border: 1px solid #e8d9a8;
+      border-radius: 10px;
+      padding: 1.5rem;
+      margin: 2rem 0;
+    }
+    .homework h2 { margin-top: 0; color: var(--warn); }
+    .cite { font-size: 0.85rem; color: var(--muted); }
+    .progress { font-size: 0.9rem; color: var(--muted); margin-bottom: 1rem; }
+    .teacher-note {
+      border-top: 1px solid var(--border);
+      margin-top: 2.5rem;
+      padding-top: 1.5rem;
+      font-size: 0.95rem;
+      color: var(--muted);
+    }
+    .lesson-nav {
+      font-size: 0.9rem;
+      color: var(--muted);
+      margin-bottom: 1.5rem;
+    }
+    .clock-demo {
+      font-family: ui-monospace, "SF Mono", Menlo, monospace;
+      background: #1a1a1a;
+      color: #f0ebe3;
+      border-radius: 8px;
+      padding: 1rem 1.25rem;
+      margin: 1rem 0;
+    }
+    .clock-demo .label { color: #9a9a9a; font-size: 0.8rem; }
+    .clock-demo .row {
+      display: flex;
+      justify-content: space-between;
+      padding: 0.35rem 0;
+      border-bottom: 1px solid #333;
+    }
+    .clock-demo .row:last-child { border-bottom: none; }
+    .clock-demo .good { color: #6fcf97; }
+    .clock-demo .bad { color: #eb8a9a; }
+  </style>
+</head>
+<body>
+
+  <p class="lesson-nav">← <a href="0001-before-you-move.html">Lesson 1: CCT</a> · Lesson 2 of the Hippo habits series</p>
+
+  <h1>Clock Budgeting</h1>
+  <p class="meta">Lesson 2 · ~15 minutes · Skill: three speeds + the move-15 checkpoint</p>
+
+  <p>Your homework showed something important: you <em>were</em> doing CCT — but it turned into a long think. Time anxiety kicked in. You rushed the scan, missed <strong>Captures</strong> on e3 and h3, and blundered anyway. Game 2 was the flags-and-blunders double loss your mission is trying to kill.</p>
+
+  <p>This lesson teaches one skill: <strong>how fast to move</strong> in a 10+5 rapid game, so CCT stays a 3-second <a href="../reference/move-check.html">safety scan</a> and you still have minutes when the Hippo fight gets real.</p>
+
+  <h2>10+5 in plain numbers</h2>
+
+  <p>You start with <strong>10 minutes</strong> (600 seconds). Every move you make adds <strong>5 seconds</strong>. A typical game runs 50–70 moves, so your "real" budget is roughly <strong>12–16 minutes</strong> if you use the increment — but only if you don't burn the bank early.</p>
+
+  <p>Strong players don't spend evenly. They play fast when little is at stake and slow when one move locks in the next ten. <span class="cite">(<a href="https://jdchess.com/en/blog/how-strong-players-manage-the-clock">JD Chess on clock management</a>)</span></p>
+
+  <h2>Three speeds</h2>
+
+  <p>Before each move, ask: <em>what kind of moment is this?</em> Pick a speed first. <em>Then</em> think. <em>Then</em> CCT. <em>Then</em> click.</p>
+
+  <div class="speed-grid">
+    <div class="speed">
+      <span class="time">≤10 sec</span>
+      <strong>Book speed</strong>
+      A move you've played a hundred times in your Hippo — fianchetto, d3, Nd2, h3, O-O. No calculation needed. Recognize, play, scan, go.
+    </div>
+    <div class="speed">
+      <span class="time">15–30 sec</span>
+      <strong>Normal speed</strong>
+      Quiet development. Obvious recaptures. Opponent mirrors your setup. Pick a reasonable plan, don't hunt for the engine's #1.
+    </div>
+    <div class="speed">
+      <span class="time">45–120 sec</span>
+      <strong>Critical speed</strong>
+      Pawn breaks, piece trades, king safety, or tactics. This is where you <em>spend</em> the time you saved in the opening. One good think here is worth five minutes of opening hesitation. <span class="cite">(<a href="https://chessgoals.com/how-to-kill-your-time-trouble/">ChessGoals on critical moves</a>)</span>
+    </div>
+  </div>
+
+  <p>Print the speeds: <a href="../reference/clock-budget.html">Clock Budget reference card</a>.</p>
+
+  <h2>The move-15 checkpoint</h2>
+
+  <div class="checkpoint">
+    <p style="margin:0;">After your opening, glance at the clock.</p>
+    <p class="big">≥ 6:00 remaining</p>
+    <p style="margin:0; font-size:0.95rem;">If you're below 6 minutes at move ~15, you spent critical-speed time on book-speed moves.</p>
+  </div>
+
+  <p>Your White Hippo development — <code>g3 Bg2 d3 Nd2 e3 h3 a3 b4 Bb2 O-O</code> — should mostly be book speed. That's how you bank time for the moment someone plays <code>...f5</code> or offers a trade on e3.</p>
+
+  <div class="clock-demo">
+    <div class="label">Two players reach move 15 (same position, same 10+5)</div>
+    <div class="row"><span>Player A — book speed in opening</span><span class="good">7:40 left</span></div>
+    <div class="row"><span>Player B — 45 sec per opening move</span><span class="bad">3:20 left</span></div>
+  </div>
+
+  <p>Player B is you in game 2 — enough time to panic, not enough to calculate. Player A has room for one proper critical think <em>and</em> a 3-second CCT on every move.</p>
+
+  <h2>CCT is not a speed</h2>
+
+  <p>This is the fix for your homework problem. CCT from <a href="0001-before-you-move.html">Lesson 1</a> is <strong>not</strong> thinking time. It's a fixed 3-second add-on at every speed:</p>
+
+  <ol>
+    <li>Pick your speed (book / normal / critical)</li>
+    <li>Think <em>only</em> that long to choose a move</li>
+    <li>Whisper "checks, captures, threats" — 3 seconds</li>
+    <li>Click</li>
+  </ol>
+
+  <p>If CCT is taking 30+ seconds, you're calculating disguised as scanning. Stop. Either upgrade the moment to <strong>critical speed</strong> and think properly, or pick the obvious move and scan quickly.</p>
+
+  <h2>Practice: pick the speed</h2>
+  <p class="progress" id="progress">Question 1 of 4</p>
+
+  <div class="card" id="quiz-container"></div>
+
+  <div class="homework">
+    <h2>Your homework (next 3 rapid games)</h2>
+    <ol>
+      <li>At <strong>move 15</strong>, write down your clock time. Goal: <strong>≥6:00</strong>.</li>
+      <li>Tag <strong>one critical moment</strong> per game — the move where you spent 45+ seconds. Was it worth it?</li>
+      <li>Keep CCT, but time it: if the scan exceeds <strong>5 seconds</strong>, note which capture you were slow to see (e3? h3?).</li>
+      <li>Bring your three move-15 clock times back to your teacher.</li>
+    </ol>
+  </div>
+
+  <h2>What's next</h2>
+  <p>Lesson 3 will target the <strong>Captures</strong> step in your Hippo pawn chain — the Bxe3 and Qxh3 misses from your homework — with a fast diagonal scan drill.</p>
+
+  <p class="cite">Sources: <a href="https://chessgoals.com/how-to-kill-your-time-trouble/">ChessGoals on time trouble</a> · <a href="https://jdchess.com/en/blog/how-strong-players-manage-the-clock">JD Chess on clock management</a> · <a href="https://www.chess.com/article/view/chess-1-1-1-study-plan">Chess.com 1-1-1 study plan</a></p>
+
+  <p class="teacher-note">
+    <strong>Questions?</strong> Ask your teacher in chat — paste a game link, your move-15 clock time, or a position where you weren't sure which speed to use.
+  </p>
+
+  <link rel="stylesheet" href="https://unpkg.com/@chrisoakman/chessboardjs@1.0.0/dist/chessboard-1.0.0.min.css">
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+  <script src="https://unpkg.com/@chrisoakman/chessboardjs@1.0.0/dist/chessboard-1.0.0.min.js"></script>
+
+  <script>
+    const quizzes = [
+      {
+        prompt: "Move 8. You're White in your Hungarian/Hippo. Position: g3, Bg2, d3, Nd2, e3, h3 played. Opponent develops with ...Nc6. Your clock: 9:10. What speed?",
+        fen: "r1bqkb1r/pppp1ppp/2n2n2/4p3/4P3/5P2/PPPP1PPP/RNBQKBNR w KQkq - 2 8",
+        caption: "Familiar Hippo setup — opponent develops normally",
+        orientation: "white",
+        options: [
+          { text: "Book speed — play a3 or b4 (or similar) in under 10 seconds", correct: true },
+          { text: "Critical speed — spend 90 seconds finding the engine's best plan", correct: false },
+          { text: "Skip thinking — click the first legal move to save time", correct: false }
+        ],
+        explain: "This is your home territory. You've seen this structure dozens of times. Book speed banks time for later. You still do 3-second CCT before clicking — speed is not carelessness."
+      },
+      {
+        prompt: "Move 18. You're White. Opponent just played ...f5 breaking against your kingside. Clock: 7:20. What speed?",
+        fen: "r2q1rk1/1bpnnpb1/pp2p1pp/4pp2/3PP3/2N2N2/PPP2PPP/R1BQ1R1K w - - 0 18",
+        caption: "Black pushes ...f5 — pawn break against your Hippo",
+        orientation: "white",
+        options: [
+          { text: "Book speed — 10 seconds, any reply is fine", correct: false },
+          { text: "Critical speed — 45–90 seconds: how does f5 change captures on e3/h3 and king safety?", correct: true },
+          { text: "Normal speed — 20 seconds and hope for the best", correct: false }
+        ],
+        explain: "Pawn breaks are critical moments — this is exactly when you spend the time you saved in the opening. Game 1's ...Bxe3+ punishes fast replies after pawn pushes. Take a minute. Then CCT."
+      },
+      {
+        prompt: "You reach move 15 with 4:15 on the clock in a 10+5 rapid. What most likely happened?",
+        fen: null,
+        options: [
+          { text: "You treated book-speed Hippo moves like critical moments — burned the bank early", correct: true },
+          { text: "The increment is broken on Lichess", correct: false },
+          { text: "CCT scans used too little time — you should scan slower", correct: false }
+        ],
+        explain: "Below 6:00 at move 15 means opening moves took 30–45 seconds each. That's the game 2 pattern: time anxiety midgame, rushed CCT, blunder cascade. Fix the opening speed, not the scan length."
+      },
+      {
+        prompt: "You found a move in 6 seconds (book speed). What do you do before clicking?",
+        fen: null,
+        options: [
+          { text: "Click immediately — you were fast, so you're safe", correct: false },
+          { text: "3-second CCT scan, then click — thinking time and scan time are separate", correct: true },
+          { text: "Spend 2 more minutes verifying — you might have missed something", correct: false }
+        ],
+        explain: "Fast thinking doesn't replace CCT. Game 1: you thought about CCT on f4 but still missed Bxe3+. The scan is 3 seconds every time, regardless of speed. That's how you avoid converting book speed into a blunder."
+      }
+    ];
+
+    let current = 0;
+    let board = null;
+
+    function destroyBoard() {
+      if (board) {
+        board.destroy();
+        board = null;
+      }
+    }
+
+    function renderQuiz() {
+      const q = quizzes[current];
+      destroyBoard();
+      document.getElementById('progress').textContent = `Question ${current + 1} of ${quizzes.length}`;
+      const container = document.getElementById('quiz-container');
+      container.innerHTML = `
+        <p class="quiz-question">${q.prompt}</p>
+        ${q.fen ? `
+          <div class="board-wrap">
+            <p class="board-caption">${q.caption || ''}</p>
+            <div id="board"></div>
+          </div>` : ''}
+        <div class="options" id="options"></div>
+        <div class="feedback" id="feedback"></div>
+      `;
+      if (q.fen) {
+        requestAnimationFrame(() => {
+          board = Chessboard('board', {
+            position: q.fen,
+            orientation: q.orientation || 'white',
+            draggable: false,
+            showNotation: true,
+            pieceTheme: '../assets/chesspieces/wikipedia/{piece}.png'
+          });
+          board.resize();
+        });
+      }
+      const optionsEl = document.getElementById('options');
+      q.options.forEach((opt, i) => {
+        const btn = document.createElement('button');
+        btn.className = 'option';
+        btn.textContent = opt.text;
+        btn.onclick = () => answer(i);
+        optionsEl.appendChild(btn);
+      });
+    }
+
+    function answer(i) {
+      const q = quizzes[current];
+      const buttons = document.querySelectorAll('.option');
+      const feedback = document.getElementById('feedback');
+      buttons.forEach((btn, j) => {
+        btn.disabled = true;
+        if (q.options[j].correct) btn.classList.add('correct');
+        else if (j === i) btn.classList.add('incorrect');
+      });
+      const ok = q.options[i].correct;
+      feedback.className = 'feedback show ' + (ok ? 'good' : 'bad');
+      feedback.innerHTML = (ok ? '✓ Correct. ' : '✗ Not quite. ') + q.explain +
+        (current < quizzes.length - 1
+          ? ' <br><br><button onclick="nextQuiz()" style="margin-top:0.75rem;font-family:inherit;padding:0.5rem 1rem;cursor:pointer;">Next question →</button>'
+          : ' <br><br><strong>Lesson complete.</strong> Play 3 rapid games, track your move-15 clock, then tell your teacher.');
+    }
+
+    function nextQuiz() {
+      current++;
+      renderQuiz();
+    }
+
+    renderQuiz();
+  </script>
+</body>
+</html>

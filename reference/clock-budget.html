@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Clock Budget — Quick Reference</title>
+  <style>
+    :root {
+      --bg: #faf8f5;
+      --ink: #1a1a1a;
+      --accent: #2d5a27;
+      --muted: #5c5c5c;
+      --card: #fff;
+      --border: #e0dcd4;
+      --warn: #7a5c00;
+      --warn-bg: #fff9e6;
+    }
+    * { box-sizing: border-box; }
+    body {
+      font-family: "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif;
+      background: var(--bg);
+      color: var(--ink);
+      line-height: 1.55;
+      max-width: 42rem;
+      margin: 0 auto;
+      padding: 2rem 1.25rem 3rem;
+    }
+    h1 { font-size: 1.75rem; font-weight: 600; margin-bottom: 0.25rem; }
+    .subtitle { color: var(--muted); font-size: 0.95rem; margin-bottom: 2rem; }
+    .card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 1.25rem 1.5rem;
+      margin-bottom: 1.25rem;
+    }
+    h2 { font-size: 1.1rem; margin: 0 0 0.75rem; color: var(--accent); }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.95rem;
+    }
+    th, td {
+      text-align: left;
+      padding: 0.5rem 0.6rem;
+      border-bottom: 1px solid var(--border);
+    }
+    th { color: var(--accent); font-weight: 600; }
+    tr:last-child td { border-bottom: none; }
+    .checkpoint {
+      background: var(--warn-bg);
+      border: 1px solid #e8d9a8;
+      border-radius: 8px;
+      padding: 1rem 1.25rem;
+      text-align: center;
+      font-size: 1.1rem;
+      font-weight: 600;
+      margin: 1rem 0;
+    }
+    .checkpoint span { color: var(--warn); }
+    ul { margin: 0; padding-left: 1.25rem; }
+    li { margin-bottom: 0.45rem; }
+    .footer { font-size: 0.85rem; color: var(--muted); margin-top: 2rem; }
+    @media print {
+      body { background: white; }
+      .card { break-inside: avoid; }
+    }
+  </style>
+</head>
+<body>
+  <h1>Clock Budget (10+5)</h1>
+  <p class="subtitle">Print this. Pair it with the <a href="move-check.html">Move Check</a> card.</p>
+
+  <div class="card">
+    <h2>Three speeds</h2>
+    <table>
+      <thead>
+        <tr><th>Speed</th><th>When</th><th>Target</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Book</strong></td>
+          <td>Your familiar Hippo moves (first ~12 moves)</td>
+          <td>≤10 sec</td>
+        </tr>
+        <tr>
+          <td><strong>Normal</strong></td>
+          <td>Quiet development, obvious recaptures</td>
+          <td>15–30 sec</td>
+        </tr>
+        <tr>
+          <td><strong>Critical</strong></td>
+          <td>Pawn breaks, trades, king safety, tactics</td>
+          <td>45–120 sec</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="checkpoint">
+    Move ~15 checkpoint: <span>≥6:00</span> on your clock
+  </div>
+
+  <div class="card">
+    <h2>CCT is not a speed</h2>
+    <p style="margin:0;">After you pick a move at any speed, add a <strong>3-second safety scan</strong> (<a href="move-check.html">CCT</a>). Thinking time and scan time are separate — never replace one with the other.</p>
+  </div>
+
+  <div class="card">
+    <h2>Book moves (White Hippo example)</h2>
+    <p style="margin:0 0 0.5rem; font-size:0.95rem;">If you recognize the position, play in book speed — don't re-invent:</p>
+    <p style="margin:0; font-family: ui-monospace, monospace; font-size:0.9rem;">g3 · Bg2 · d3 · Nd2 · e3 · h3 · a3 · b4 · Bb2 · O-O</p>
+  </div>
+
+  <div class="card">
+    <h2>Critical moment triggers</h2>
+    <ul>
+      <li>Opponent pawn push against your chain (…f5, …e5, …d5)</li>
+      <li>Any capture or trade offer</li>
+      <li>Your king crosses the third rank</li>
+      <li>You drop below 3:00 with pieces still on the board</li>
+    </ul>
+  </div>
+
+  <p class="footer">
+    <a href="../lessons/0002-clock-budgeting.html">Lesson 2</a> ·
+    <a href="../lessons/0001-before-you-move.html">Lesson 1</a> ·
+    <a href="../MISSION.md">Mission</a>
+  </p>
+</body>
+</html>
