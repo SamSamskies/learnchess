@@ -19,6 +19,6 @@
   },
   "homepage": "https://github.com/SamSamskies/learnchess#readme",
   "devDependencies": {
-    "chess.js": "^1.4.0"
+    "chess.js": "1.4.0"
   }
 }
