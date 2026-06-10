@@ -42,6 +42,17 @@ Make opening a lesson as easy as possible — ideally a single CLI command the u
 
 Each lesson should link via HTML anchors to other lessons and reference documents.
 
+### Chess lesson boards (FEN)
+
+When a lesson uses chessboard.js, **never hand-write FEN strings from memory**. Invalid FENs render a blank board or show impossible positions (extra pawns, pieces on wrong squares).
+
+1. **Generate positions with `chess.js`** — play the move sequence in a script, copy the resulting `fen()`.
+2. **Run `npm test`** before finishing the lesson — `scripts/validate-lesson-fens.js` checks every `fen:` in `./lessons/*.html` for:
+   - 8 squares per rank
+   - loadable by chess.js
+   - at most 8 pawns per side, exactly one king per side
+3. **Match the prompt to the FEN** — if the text says "move 7" or lists moves played, the position must come from that line.
+
 ## The Mission
 
 Every lesson should be tied into the mission - the reason that the user is interested in learning about the topic.

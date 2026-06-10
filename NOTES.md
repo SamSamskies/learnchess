@@ -18,6 +18,10 @@
 - Blitz, rapid, and classical on Lichess depending on available time
 - Duolingo when convenient (harder clock constraint)
 
+## Lesson authoring
+
+- Chess board FENs: generate via `chess.js` move sequences, never by hand; run `npm test` before shipping a lesson
+
 ## Homework observations (Lesson 1)
 
 - CCT ritual is in play, but **Captures** on Hippo pawns (especially e3, h3) are the recurring miss — not Checks or deep Threats

@@ -1,0 +1,24 @@
+{
+  "name": "learnchess",
+  "version": "1.0.0",
+  "description": "Prompt agent with `/teach <what i want to learn next>`",
+  "main": "index.js",
+  "scripts": {
+    "test": "node scripts/validate-lesson-fens.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SamSamskies/learnchess.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/SamSamskies/learnchess/issues"
+  },
+  "homepage": "https://github.com/SamSamskies/learnchess#readme",
+  "devDependencies": {
+    "chess.js": "^1.4.0"
+  }
+}
