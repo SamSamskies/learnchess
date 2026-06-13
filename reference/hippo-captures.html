@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hippo Capture Scan — Quick Reference</title>
+  <style>
+    :root {
+      --bg: #faf8f5;
+      --ink: #1a1a1a;
+      --accent: #2d5a27;
+      --muted: #5c5c5c;
+      --card: #fff;
+      --border: #e0dcd4;
+      --target: #8b2942;
+      --target-bg: #fdf0f3;
+    }
+    * { box-sizing: border-box; }
+    body {
+      font-family: "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif;
+      background: var(--bg);
+      color: var(--ink);
+      line-height: 1.55;
+      max-width: 42rem;
+      margin: 0 auto;
+      padding: 2rem 1.25rem 3rem;
+    }
+    h1 { font-size: 1.75rem; font-weight: 600; margin-bottom: 0.25rem; }
+    .subtitle { color: var(--muted); font-size: 0.95rem; margin-bottom: 2rem; }
+    .card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 1.25rem 1.5rem;
+      margin-bottom: 1.25rem;
+    }
+    h2 { font-size: 1.1rem; margin: 0 0 0.75rem; color: var(--accent); }
+    .scan {
+      font-size: 1.35rem;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      text-align: center;
+      padding: 1rem;
+      background: var(--target-bg);
+      border-radius: 6px;
+      margin-bottom: 1rem;
+      color: var(--target);
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.95rem;
+    }
+    th, td {
+      text-align: left;
+      padding: 0.5rem 0.6rem;
+      border-bottom: 1px solid var(--border);
+      vertical-align: top;
+    }
+    th { color: var(--accent); font-weight: 600; }
+    tr:last-child td { border-bottom: none; }
+    code { font-size: 0.9em; }
+    .footer { font-size: 0.85rem; color: var(--muted); margin-top: 2rem; }
+    @media print {
+      body { background: white; }
+      .card { break-inside: avoid; }
+    }
+  </style>
+</head>
+<body>
+  <h1>Hippo Capture Scan</h1>
+  <p class="subtitle">The Captures step in CCT — for your pawn chain only.</p>
+
+  <div class="card">
+    <div class="scan">e3 · h3 · d3</div>
+    <p style="margin:0;">One second per square. Trace the diagonal or file from each pawn outward. Done in 3 seconds — not a calculation.</p>
+  </div>
+
+  <div class="card">
+    <h2>What to look for on each square</h2>
+    <table>
+      <thead>
+        <tr><th>Square</th><th>Common attackers</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>e3</strong></td>
+          <td>Bishop on <code>c5</code>, <code>a7</code> (long diagonal). After pawn breaks like <code>f4</code>, diagonals open — re-scan.</td>
+        </tr>
+        <tr>
+          <td><strong>h3</strong></td>
+          <td>Undeveloped bishop still on <code>c8</code> (fires through the fianchetto). Bishop on <code>g7</code> via <code>h6</code>. Queen on <code>d8</code>–<code>h4</code> file.</td>
+        </tr>
+        <tr>
+          <td><strong>d3</strong></td>
+          <td>Queen to <code>d3</code> or <code>c4</code>. Bishop on <code>b5</code>, <code>a6</code>. After <code>g4</code> or center opens, queen hops to <code>d3</code>.</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="card">
+    <h2>When to run it</h2>
+    <ul style="margin:0; padding-left:1.25rem;">
+      <li>Every move — as the <strong>Captures</strong> step inside CCT</li>
+      <li>Extra re-scan after <strong>pawn breaks</strong> (<code>f4</code>, <code>g4</code>, <code>b4</code>) — diagonals shift</li>
+      <li>At <strong>critical speed</strong> before piece moves that open lines (<code>Nd2</code>, <code>Ne2</code>)</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h2>Your real misses (Lesson 1)</h2>
+    <ul style="margin:0; padding-left:1.25rem;">
+      <li><code>15. f4</code> → missed <code>...Bxe3+</code> (<a href="https://lichess.org/kZxyW7il">kZxyW7il</a>)</li>
+      <li><code>13. Nd2</code> → opened <code>...Bxh3</code> diagonal (<a href="https://lichess.org/eIWP4xFJ">eIWP4xFJ</a>)</li>
+    </ul>
+  </div>
+
+  <p class="footer">
+    <a href="../lessons/0003-hippo-capture-scan.html">Lesson 3</a> ·
+    <a href="move-check.html">CCT card</a> ·
+    <a href="clock-budget.html">Clock Budget card</a>
+  </p>
+</body>
+</html>

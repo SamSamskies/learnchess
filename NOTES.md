@@ -27,3 +27,11 @@
 - CCT ritual is in play, but **Captures** on Hippo pawns (especially e3, h3) are the recurring miss — not Checks or deep Threats
 - Thinking *too long* about CCT creates time anxiety → incomplete scan → more blunders (game 2)
 - Game 3 (Black, Modern) shows the habit can work: no blunders, only a pawn-recapture inaccuracy
+
+## Homework observations (Lesson 2)
+
+- **Move-15 checkpoint passed all three games:** 6:11 (Black, Modern), 8:46 and 9:28 (White, Hungarian) — opening speed discipline is landing
+- **No blunder cascade** in this batch; rating climbed 1311 → 1324 across the three games
+- **Critical spend can work:** 80 sec on 14...Bxh8 in game 1 maintained the edge
+- **New leak — misclick after long think:** game 2 spent ~47 sec planning Bf3, played Rf3 by accident; different from CCT/capture misses
+- Homework item 3 (CCT >5 sec notes) not reported — ask next session if scan stayed tight

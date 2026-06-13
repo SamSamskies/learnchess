@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lesson 3 — Hippo Capture Scan</title>
+  <style>
+    :root {
+      --bg: #faf8f5;
+      --ink: #1a1a1a;
+      --accent: #2d5a27;
+      --accent-light: #eef4ec;
+      --wrong: #8b2942;
+      --wrong-bg: #fdf0f3;
+      --right: #1e5631;
+      --right-bg: #edf7f0;
+      --muted: #5c5c5c;
+      --card: #fff;
+      --border: #e0dcd4;
+      --warn: #7a5c00;
+      --warn-bg: #fff9e6;
+      --target: #8b2942;
+      --target-bg: #fdf0f3;
+    }
+    * { box-sizing: border-box; }
+    body {
+      font-family: "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif;
+      background: var(--bg);
+      color: var(--ink);
+      line-height: 1.6;
+      max-width: 44rem;
+      margin: 0 auto;
+      padding: 2rem 1.25rem 4rem;
+    }
+    h1 { font-size: 2rem; font-weight: 600; line-height: 1.2; margin-bottom: 0.5rem; }
+    .meta { color: var(--muted); font-size: 0.9rem; margin-bottom: 2rem; }
+    h2 { font-size: 1.25rem; margin: 2rem 0 0.75rem; color: var(--accent); }
+    p { margin: 0 0 1rem; }
+    a { color: var(--accent); }
+    .card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 1.5rem;
+      margin: 1.25rem 0;
+    }
+    .scan-box {
+      text-align: center;
+      font-size: 1.5rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      padding: 1.25rem;
+      background: var(--target-bg);
+      border: 1px solid #e8c4cf;
+      border-radius: 8px;
+      margin: 1rem 0;
+      color: var(--target);
+    }
+    .scan-box .note {
+      display: block;
+      font-size: 0.85rem;
+      font-weight: 400;
+      letter-spacing: 0;
+      color: var(--muted);
+      margin-top: 0.5rem;
+    }
+    .chain {
+      display: flex;
+      justify-content: center;
+      gap: 1.5rem;
+      margin: 1.25rem 0;
+      flex-wrap: wrap;
+    }
+    .pawn-target {
+      text-align: center;
+      padding: 0.75rem 1.25rem;
+      border: 2px solid var(--target);
+      border-radius: 8px;
+      background: var(--target-bg);
+      min-width: 4.5rem;
+    }
+    .pawn-target strong {
+      display: block;
+      font-size: 1.25rem;
+      color: var(--target);
+    }
+    .pawn-target span {
+      font-size: 0.8rem;
+      color: var(--muted);
+    }
+    .board-wrap {
+      max-width: 360px;
+      margin: 1rem auto 1.25rem;
+    }
+    .board-caption {
+      text-align: center;
+      font-size: 0.9rem;
+      color: var(--muted);
+      margin-bottom: 0.5rem;
+    }
+    #board { width: 100%; }
+    .quiz-question { font-weight: 600; margin-bottom: 1rem; }
+    .options { display: flex; flex-direction: column; gap: 0.5rem; }
+    button.option {
+      font-family: inherit;
+      font-size: 1rem;
+      text-align: left;
+      padding: 0.75rem 1rem;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      background: var(--card);
+      cursor: pointer;
+      transition: border-color 0.15s, background 0.15s;
+    }
+    button.option:hover:not(:disabled) { border-color: var(--accent); background: var(--accent-light); }
+    button.option:disabled { cursor: default; }
+    button.option.correct { border-color: var(--right); background: var(--right-bg); }
+    button.option.incorrect { border-color: var(--wrong); background: var(--wrong-bg); }
+    .feedback {
+      margin-top: 1rem;
+      padding: 1rem;
+      border-radius: 6px;
+      display: none;
+    }
+    .feedback.show { display: block; }
+    .feedback.good { background: var(--right-bg); border-left: 4px solid var(--right); }
+    .feedback.bad { background: var(--wrong-bg); border-left: 4px solid var(--wrong); }
+    .homework {
+      background: var(--warn-bg);
+      border: 1px solid #e8d9a8;
+      border-radius: 10px;
+      padding: 1.5rem;
+      margin: 2rem 0;
+    }
+    .homework h2 { margin-top: 0; color: var(--warn); }
+    .cite { font-size: 0.85rem; color: var(--muted); }
+    .progress { font-size: 0.9rem; color: var(--muted); margin-bottom: 1rem; }
+    .teacher-note {
+      border-top: 1px solid var(--border);
+      margin-top: 2.5rem;
+      padding-top: 1.5rem;
+      font-size: 0.95rem;
+      color: var(--muted);
+    }
+    .lesson-nav {
+      font-size: 0.9rem;
+      color: var(--muted);
+      margin-bottom: 1.5rem;
+    }
+    ol.steps { margin: 0; padding-left: 1.25rem; }
+    ol.steps li { margin-bottom: 0.5rem; }
+  </style>
+</head>
+<body>
+
+  <p class="lesson-nav">
+    <a href="0001-before-you-move.html">Lesson 1: CCT</a> ·
+    <a href="0002-clock-budgeting.html">Lesson 2: Clock</a> ·
+    Lesson 3 of the Hippo habits series
+  </p>
+
+  <h1>Hippo Capture Scan</h1>
+  <p class="meta">Lesson 3 · ~15 minutes · Skill: the e3-h3-d3 captures drill</p>
+
+  <p>Lesson 1 gave you CCT. Lesson 2 gave you clock budgeting. Your homework in both showed the same blind spot: you run the habit, but the <strong>Captures</strong> step skips the pawns your Hippo leaves on <strong>e3</strong> and <strong>h3</strong>. Those aren't deep tactics — they're diagonal snipers you looked past.</p>
+
+  <p>This lesson replaces vague "check captures" with one concrete drill: point at three squares, one second each. It plugs directly into CCT and takes three seconds — not thirty.</p>
+
+  <h2>Your pawn chain is the target</h2>
+
+  <p>White Hippo setup: <code>g3 Bg2 d3 e3 h3</code>. Opponents learn to aim at the chain, not your pieces. Your Lesson 1 blunders were both chain captures:</p>
+
+  <ul>
+    <li><a href="https://lichess.org/kZxyW7il">kZxyW7il</a> — <code>15. f4</code> missed <code>...Bxe3+</code> (bishop on a7)</li>
+    <li><a href="https://lichess.org/eIWP4xFJ">eIWP4xFJ</a> — <code>13. Nd2</code> opened <code>...Bxh3</code> (bishop still on c8)</li>
+  </ul>
+
+  <div class="chain">
+    <div class="pawn-target"><strong>d3</strong><span>queen, c4 bishop</span></div>
+    <div class="pawn-target"><strong>e3</strong><span>c5/a7 bishop</span></div>
+    <div class="pawn-target"><strong>h3</strong><span>c8/g7 bishop</span></div>
+  </div>
+
+  <h2>The drill: e3 · h3 · d3</h2>
+
+  <p>During the <strong>Captures</strong> step of <a href="0001-before-you-move.html">CCT</a>, don't scan the whole board. Run this instead:</p>
+
+  <div class="scan-box">
+    e3 → h3 → d3
+    <span class="note">1 second per square · trace the diagonal or file outward</span>
+  </div>
+
+  <ol class="steps">
+    <li><strong>e3</strong> — follow the long diagonal toward a7/c5. Pawn breaks like <code>f4</code> can open it.</li>
+    <li><strong>h3</strong> — check the c8 bishop (often still undeveloped!) and the g7 fianchetto.</li>
+    <li><strong>d3</strong> — queen to d3/c4, bishops on b5/a6. Re-scan after <code>g4</code>.</li>
+  </ol>
+
+  <p>Print the card: <a href="../reference/hippo-captures.html">Hippo Capture Scan reference</a>.</p>
+
+  <h2>Pair it with clock speed</h2>
+
+  <p>From <a href="0002-clock-budgeting.html">Lesson 2</a>: pawn breaks and piece moves that open lines are <strong>critical speed</strong> moments. Think at critical speed, <em>then</em> run e3-h3-d3, <em>then</em> click. The scan is not thinking time — it's three seconds on top.</p>
+
+  <p>If you play <code>f4</code> or <code>Nd2</code> at book speed and skip the scan, you convert a saved minute into a lost pawn and a lost king.</p>
+
+  <h2>Practice: spot the chain capture</h2>
+  <p class="progress" id="progress">Question 1 of 5</p>
+
+  <div class="card" id="quiz-container"></div>
+
+  <div class="homework">
+    <h2>Your homework (next 3 rapid games)</h2>
+    <ol>
+      <li>During every <strong>Captures</strong> step, whisper <strong>"e3, h3, d3"</strong> and point at each square on the board.</li>
+      <li>After pawn breaks (<code>f4</code>, <code>g4</code>, <code>b4</code>) or knight moves (<code>Nd2</code>, <code>Ne2</code>), run the scan <strong>twice</strong> — diagonals shift when pieces move.</li>
+      <li>If you miss or catch a chain capture, write: <em>"Move ___. Square ___. Piece ___."</em></li>
+      <li>Bring your three games back to your teacher.</li>
+    </ol>
+  </div>
+
+  <h2>What's next</h2>
+  <p>Lesson 4 will cover <strong>king tuck</strong> — getting your king off open files (the <code>Bf3</code> / <code>Kh1</code> plan from your Lesson 2 homework misclick) and when the Hippo wall is thick enough to break.</p>
+
+  <p class="cite">Sources: your games <a href="https://lichess.org/kZxyW7il">kZxyW7il</a> · <a href="https://lichess.org/eIWP4xFJ">eIWP4xFJ</a> · <a href="../reference/move-check.html">CCT reference</a></p>
+
+  <p class="teacher-note">
+    <strong>Questions?</strong> Ask your teacher in chat — paste a position where you weren't sure if e3, h3, or d3 was safe.
+  </p>
+
+  <link rel="stylesheet" href="https://unpkg.com/@chrisoakman/chessboardjs@1.0.0/dist/chessboard-1.0.0.min.css">
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+  <script src="https://unpkg.com/@chrisoakman/chessboardjs@1.0.0/dist/chessboard-1.0.0.min.js"></script>
+
+  <script>
+    const quizzes = [
+      {
+        prompt: "Move 15. Your real game vs ChessKEREM2015. You want to play f4. The e3 scan — what capture should critical speed + CCT catch?",
+        fen: "1r1q2k1/bbp2pp1/p1n1rn1p/1p1pp3/1P4P1/P2PP2P/1BPNNPB1/R2Q1RK1 w - - 2 15",
+        caption: "Before 15. f4 — from kZxyW7il",
+        orientation: "white",
+        options: [
+          { text: "...Bxe3+ — the bishop on a7 fires along the long diagonal", correct: true },
+          { text: "...Qxh3 — queen snatches the h3 pawn", correct: false },
+          { text: "Nothing — e3 is covered by your pieces", correct: false },
+          { text: "...Nxb4 — knight takes the b4 pawn", correct: false }
+        ],
+        explain: "After f4, the a7 bishop plays ...Bxe3+ with check. You thought about CCT on f4 but scanned generically instead of pointing at e3. This is exactly what the chain drill fixes."
+      },
+      {
+        prompt: "Move 13. You just played Nd2 (game vs SebKadar). Black to play — which Hippo pawn can they capture right now?",
+        fen: "r1bq1rk1/ppp1ppbp/2n2np1/3p4/8/P2PP1PP/1PPN1PB1/R1BQK1NR b KQ - 1 7",
+        caption: "After 13. Nd2 — from eIWP4xFJ",
+        orientation: "white",
+        options: [
+          { text: "h3 — ...Bxh3 from the undeveloped c8 bishop", correct: true },
+          { text: "e3 — bishop takes on e3", correct: false },
+          { text: "d3 — queen takes on d3", correct: false },
+          { text: "None — the chain is safe", correct: false }
+        ],
+        explain: "The c8 bishop is still on c8. Nd2 didn't attack anything, but the diagonal c8–h3 is clear. Your h3 scan catches this. Black played ...e6 instead — but you need to see Bxh3 before every move, not just when they play it."
+      },
+      {
+        prompt: "Move 6. You played e3 against ...Bc5. Before you clicked e3 — what capture should the e3 scan have flagged?",
+        fen: "r1bqk2r/pppp1ppp/2n2n2/2b1p3/8/3PP1P1/PPPN1PBP/R1BQK1NR b KQkq - 0 5",
+        caption: "After 6. e3 — Bc5 eyes the pawn",
+        orientation: "white",
+        options: [
+          { text: "...Bxe3 — bishop on c5 takes immediately", correct: true },
+          { text: "...Nxe3 — knight capture", correct: false },
+          { text: "...Qh4+ — queen check", correct: false },
+          { text: "Nothing — e3 is safe", correct: false }
+        ],
+        explain: "Classic Hippo tension: you stake e3, they stake c5. The e3 scan is mandatory every move once this structure appears. Often you'll play e3 anyway — but you need to see the capture before you choose it."
+      },
+      {
+        prompt: "Move 23. You want to play g4 (same game vs SebKadar, later). Which chain square becomes capturable after g4?",
+        fen: "2rq1rk1/4npbp/4pnp1/2p5/2N1PP2/P2P2PP/2Q1N1K1/BR3R2 w - - 1 23",
+        caption: "Before 23. g4 — queen eyes d3",
+        orientation: "white",
+        options: [
+          { text: "d3 — ...Qxd3 after the g-pawn moves", correct: true },
+          { text: "e3 — bishop takes e3", correct: false },
+          { text: "h3 — Bxh3", correct: false },
+          { text: "None", correct: false }
+        ],
+        explain: "Pawn breaks re-open diagonals and files. After g4, the queen on d8 reaches d3. The d3 scan catches this — and it's why you re-scan after every break."
+      },
+      {
+        prompt: "During the Captures step in your White Hippo, which three squares do you point at?",
+        fen: null,
+        options: [
+          { text: "e3, h3, d3 — the pawn chain, in that order", correct: true },
+          { text: "Every pawn on the board, starting from a2", correct: false },
+          { text: "Only squares where a piece moved last turn", correct: false },
+          { text: "e4, f3, g4 — the kingside attack squares", correct: false }
+        ],
+        explain: "Three squares, three seconds, every move. This replaces the vague 'check captures' that was eating your clock in Lesson 1 homework. Checks and Threats still get a quick look — but e3-h3-d3 is the Hippo-specific captures drill."
+      }
+    ];
+
+    let current = 0;
+    let board = null;
+
+    function destroyBoard() {
+      if (board) {
+        board.destroy();
+        board = null;
+      }
+    }
+
+    function renderQuiz() {
+      const q = quizzes[current];
+      destroyBoard();
+      document.getElementById('progress').textContent = `Question ${current + 1} of ${quizzes.length}`;
+      const container = document.getElementById('quiz-container');
+      container.innerHTML = `
+        <p class="quiz-question">${q.prompt}</p>
+        ${q.fen ? `
+          <div class="board-wrap">
+            <p class="board-caption">${q.caption || ''}</p>
+            <div id="board"></div>
+          </div>` : ''}
+        <div class="options" id="options"></div>
+        <div class="feedback" id="feedback"></div>
+      `;
+      if (q.fen) {
+        requestAnimationFrame(() => {
+          board = Chessboard('board', {
+            position: q.fen,
+            orientation: q.orientation || 'white',
+            draggable: false,
+            showNotation: true,
+            pieceTheme: '../assets/chesspieces/wikipedia/{piece}.png'
+          });
+          board.resize();
+        });
+      }
+      const optionsEl = document.getElementById('options');
+      q.options.forEach((opt, i) => {
+        const btn = document.createElement('button');
+        btn.className = 'option';
+        btn.textContent = opt.text;
+        btn.onclick = () => answer(i);
+        optionsEl.appendChild(btn);
+      });
+    }
+
+    function answer(i) {
+      const q = quizzes[current];
+      const buttons = document.querySelectorAll('.option');
+      const feedback = document.getElementById('feedback');
+      buttons.forEach((btn, j) => {
+        btn.disabled = true;
+        if (q.options[j].correct) btn.classList.add('correct');
+        else if (j === i) btn.classList.add('incorrect');
+      });
+      const ok = q.options[i].correct;
+      feedback.className = 'feedback show ' + (ok ? 'good' : 'bad');
+      feedback.innerHTML = (ok ? '✓ Correct. ' : '✗ Not quite. ') + q.explain +
+        (current < quizzes.length - 1
+          ? ' <br><br><button onclick="nextQuiz()" style="margin-top:0.75rem;font-family:inherit;padding:0.5rem 1rem;cursor:pointer;">Next question →</button>'
+          : ' <br><br><strong>Lesson complete.</strong> Play 3 rapid games with the e3-h3-d3 scan, then tell your teacher.');
+    }
+
+    function nextQuiz() {
+      current++;
+      renderQuiz();
+    }
+
+    renderQuiz();
+  </script>
+</body>
+</html>
