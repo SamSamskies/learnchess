@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Two-Ply & Queen Paths — Quick Reference</title>
+  <style>
+    :root {
+      --bg: #faf8f5;
+      --ink: #1a1a1a;
+      --accent: #2d5a27;
+      --muted: #5c5c5c;
+      --card: #fff;
+      --border: #e0dcd4;
+      --target: #5a3d8b;
+      --target-bg: #f3eff8;
+      --warn: #7a5c00;
+      --warn-bg: #fff9e6;
+    }
+    * { box-sizing: border-box; }
+    body {
+      font-family: "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif;
+      background: var(--bg);
+      color: var(--ink);
+      line-height: 1.55;
+      max-width: 42rem;
+      margin: 0 auto;
+      padding: 2rem 1.25rem 3rem;
+    }
+    h1 { font-size: 1.75rem; font-weight: 600; margin-bottom: 0.25rem; }
+    .subtitle { color: var(--muted); font-size: 0.95rem; margin-bottom: 2rem; }
+    .card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 1.25rem 1.5rem;
+      margin-bottom: 1.25rem;
+    }
+    h2 { font-size: 1.1rem; margin: 0 0 0.75rem; color: var(--accent); }
+    .scan {
+      font-size: 1.2rem;
+      font-weight: 600;
+      letter-spacing: 0.03em;
+      text-align: center;
+      padding: 1rem;
+      border-radius: 6px;
+      margin-bottom: 0.75rem;
+    }
+    .scan.ply { background: var(--warn-bg); color: var(--warn); }
+    .scan.queen { background: var(--target-bg); color: var(--target); }
+    .scan.king { background: #eef4ec; color: var(--accent); }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.95rem;
+    }
+    th, td {
+      text-align: left;
+      padding: 0.5rem 0.6rem;
+      border-bottom: 1px solid var(--border);
+      vertical-align: top;
+    }
+    th { color: var(--accent); font-weight: 600; }
+    tr:last-child td { border-bottom: none; }
+    code { font-size: 0.9em; }
+    ol { margin: 0; padding-left: 1.25rem; }
+    li { margin-bottom: 0.4rem; }
+    .footer { font-size: 0.85rem; color: var(--muted); margin-top: 2rem; }
+    @media print {
+      body { background: white; }
+      .card { break-inside: avoid; }
+    }
+  </style>
+</head>
+<body>
+  <h1>Two-Ply & Queen Paths</h1>
+  <p class="subtitle">When you're ahead — or grabbing material — think two moves, not one.</p>
+
+  <div class="card">
+    <div class="scan ply">I take → they take → then what?</div>
+    <p style="margin:0;">Run this on <strong>any capture with check</strong> before you click. If the take-back loses your queen or a piece, reject the move and find a quiet alternative.</p>
+  </div>
+
+  <div class="card">
+    <h2>Two-ply examples (your game o4HNxFX3)</h2>
+    <table>
+      <thead>
+        <tr><th>You play</th><th>They reply</th><th>Verdict</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><code>Qxg6+</code></td>
+          <td><code>...hxg6</code> takes your queen</td>
+          <td>Bad — lose queen for a pawn</td>
+        </tr>
+        <tr>
+          <td><code>Qxd5+</code></td>
+          <td><code>...cxd5</code> takes your queen</td>
+          <td>Bad — same trap</td>
+        </tr>
+        <tr>
+          <td><code>hxg6</code></td>
+          <td>(no queen trade)</td>
+          <td>Good — stay ahead safely</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="card">
+    <div class="scan queen">b2 · d4 · a3 · h4</div>
+    <p style="margin:0 0 0.75rem;">During the <strong>Threats</strong> step — especially when you pushed <code>a3</code> / <code>b3</code> — ask: where can their queen land in <strong>one move</strong>?</p>
+    <table>
+      <thead>
+        <tr><th>Square</th><th>Why it matters</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>a3</strong></td>
+          <td>Flank pawn you pushed — queen on <code>d6</code> or <code>c5</code> often eyes it</td>
+        </tr>
+        <tr>
+          <td><strong>b2</strong></td>
+          <td>Infiltration square — queen hops here after <code>...Qxa3</code></td>
+        </tr>
+        <tr>
+          <td><strong>d4</strong></td>
+          <td>Center pawn after <code>d4</code> break — queen lands here with tempo</td>
+        </tr>
+        <tr>
+          <td><strong>h4</strong></td>
+          <td>Kingside — queen from <code>d8</code>–<code>g5</code> (your game 3 win started here)</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="card">
+    <div class="scan king">King safe? → then grab.</div>
+    <p style="margin:0;">Before any pawn or piece capture when your king is still on the center files: <strong>where does my king go if they check me?</strong> If you can't answer, don't grab.</p>
+    <p style="margin:0.75rem 0 0; font-size:0.95rem;">Your miss in <a href="https://lichess.org/pJ7NicZ9">pJ7NicZ9</a>: <code>...Bxb2</code> with king on <code>e8</code>, queen on <code>f3</code>.</p>
+  </div>
+
+  <div class="card">
+    <h2>How this fits CCT</h2>
+    <ol>
+      <li><strong>Captures</strong> — still run <code>e3 · h3 · d3</code> (Lesson 3)</li>
+      <li><strong>Threats</strong> — add queen one-move paths (<code>b2 · d4 · a3 · h4</code>)</li>
+      <li><strong>Any capture with +</strong> — add two-ply before clicking</li>
+      <li><strong>Material grab, king uncastled</strong> — king-safe gate first</li>
+    </ol>
+  </div>
+
+  <p class="footer">
+    <a href="../lessons/0004-two-ply-and-queen-paths.html">Lesson 4</a> ·
+    <a href="hippo-captures.html">Hippo Captures</a> ·
+    <a href="move-check.html">CCT card</a>
+  </p>
+</body>
+</html>

@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lesson 4 — Two-Ply & Queen Paths</title>
+  <style>
+    :root {
+      --bg: #faf8f5;
+      --ink: #1a1a1a;
+      --accent: #2d5a27;
+      --accent-light: #eef4ec;
+      --wrong: #8b2942;
+      --wrong-bg: #fdf0f3;
+      --right: #1e5631;
+      --right-bg: #edf7f0;
+      --muted: #5c5c5c;
+      --card: #fff;
+      --border: #e0dcd4;
+      --warn: #7a5c00;
+      --warn-bg: #fff9e6;
+      --queen: #5a3d8b;
+      --queen-bg: #f3eff8;
+    }
+    * { box-sizing: border-box; }
+    body {
+      font-family: "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif;
+      background: var(--bg);
+      color: var(--ink);
+      line-height: 1.6;
+      max-width: 44rem;
+      margin: 0 auto;
+      padding: 2rem 1.25rem 4rem;
+    }
+    h1 { font-size: 2rem; font-weight: 600; line-height: 1.2; margin-bottom: 0.5rem; }
+    .meta { color: var(--muted); font-size: 0.9rem; margin-bottom: 2rem; }
+    h2 { font-size: 1.25rem; margin: 2rem 0 0.75rem; color: var(--accent); }
+    p { margin: 0 0 1rem; }
+    a { color: var(--accent); }
+    .card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 1.5rem;
+      margin: 1.25rem 0;
+    }
+    .drill-box {
+      text-align: center;
+      font-size: 1.2rem;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      padding: 1.25rem;
+      border-radius: 8px;
+      margin: 1rem 0;
+    }
+    .drill-box.ply {
+      background: var(--warn-bg);
+      border: 1px solid #e8d9a8;
+      color: var(--warn);
+    }
+    .drill-box.queen {
+      background: var(--queen-bg);
+      border: 1px solid #d4c8e8;
+      color: var(--queen);
+    }
+    .drill-box.king {
+      background: var(--accent-light);
+      border: 1px solid #c5d9c0;
+      color: var(--accent);
+    }
+    .drill-box .note {
+      display: block;
+      font-size: 0.85rem;
+      font-weight: 400;
+      letter-spacing: 0;
+      color: var(--muted);
+      margin-top: 0.5rem;
+    }
+    .board-wrap {
+      max-width: 360px;
+      margin: 1rem auto 1.25rem;
+    }
+    .board-caption {
+      text-align: center;
+      font-size: 0.9rem;
+      color: var(--muted);
+      margin-bottom: 0.5rem;
+    }
+    #board { width: 100%; }
+    .quiz-question { font-weight: 600; margin-bottom: 1rem; }
+    .options { display: flex; flex-direction: column; gap: 0.5rem; }
+    button.option {
+      font-family: inherit;
+      font-size: 1rem;
+      text-align: left;
+      padding: 0.75rem 1rem;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      background: var(--card);
+      cursor: pointer;
+      transition: border-color 0.15s, background 0.15s;
+    }
+    button.option:hover:not(:disabled) { border-color: var(--accent); background: var(--accent-light); }
+    button.option:disabled { cursor: default; }
+    button.option.correct { border-color: var(--right); background: var(--right-bg); }
+    button.option.incorrect { border-color: var(--wrong); background: var(--wrong-bg); }
+    .feedback {
+      margin-top: 1rem;
+      padding: 1rem;
+      border-radius: 6px;
+      display: none;
+    }
+    .feedback.show { display: block; }
+    .feedback.good { background: var(--right-bg); border-left: 4px solid var(--right); }
+    .feedback.bad { background: var(--wrong-bg); border-left: 4px solid var(--wrong); }
+    .homework {
+      background: var(--warn-bg);
+      border: 1px solid #e8d9a8;
+      border-radius: 10px;
+      padding: 1.5rem;
+      margin: 2rem 0;
+    }
+    .homework h2 { margin-top: 0; color: var(--warn); }
+    .cite { font-size: 0.85rem; color: var(--muted); }
+    .progress { font-size: 0.9rem; color: var(--muted); margin-bottom: 1rem; }
+    .teacher-note {
+      border-top: 1px solid var(--border);
+      margin-top: 2.5rem;
+      padding-top: 1.5rem;
+      font-size: 0.95rem;
+      color: var(--muted);
+    }
+    .lesson-nav {
+      font-size: 0.9rem;
+      color: var(--muted);
+      margin-bottom: 1.5rem;
+    }
+    ol.steps { margin: 0; padding-left: 1.25rem; }
+    ol.steps li { margin-bottom: 0.5rem; }
+    table.compact {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.95rem;
+      margin: 1rem 0;
+    }
+    table.compact th, table.compact td {
+      text-align: left;
+      padding: 0.5rem 0.6rem;
+      border-bottom: 1px solid var(--border);
+    }
+    table.compact th { color: var(--accent); }
+  </style>
+</head>
+<body>
+
+  <p class="lesson-nav">
+    <a href="0001-before-you-move.html">Lesson 1: CCT</a> ·
+    <a href="0002-clock-budgeting.html">Lesson 2: Clock</a> ·
+    <a href="0003-hippo-capture-scan.html">Lesson 3: Captures</a> ·
+    Lesson 4
+  </p>
+
+  <h1>Two-Ply & Queen Paths</h1>
+  <p class="meta">Lesson 4 · ~15 minutes · Skill: think two moves when ahead; spot queen infiltration</p>
+
+  <p>Lesson 3 fixed your chain scan. Your last homework showed two <em>new</em> leaks — and one thing you got right that your teacher initially missed.</p>
+
+  <p>In <a href="https://lichess.org/o4HNxFX3">o4HNxFX3</a>, you correctly saw that <code>Qxg6+</code> and <code>Qxd5+</code> lose your queen to pawn recaptures. That's good calculation. The real miss was playing <code>Qg3</code> afterward and letting the queen infiltrate via <code>a3</code> and <code>b2</code>.</p>
+
+  <p>In <a href="https://lichess.org/pJ7NicZ9">pJ7NicZ9</a>, you saw the hanging pawn on <code>b2</code> — but grabbed it with your king still on <code>e8</code>.</p>
+
+  <p>This lesson adds three filters on top of CCT and the e3-h3-d3 scan. They take a few extra seconds only when they apply.</p>
+
+  <h2>1. Two-ply on check-captures</h2>
+
+  <p>A capture with <code>+</code> is not automatically good. Before you click, whisper:</p>
+
+  <div class="drill-box ply">
+    I take → they take → then what?
+    <span class="note">Critical speed · ~5 seconds · only when you're considering a capture with check</span>
+  </div>
+
+  <p>Your game at move 34:</p>
+
+  <table class="compact">
+    <thead>
+      <tr><th>You consider</th><th>They reply</th><th>Verdict</th></tr>
+    </thead>
+    <tbody>
+      <tr><td><code>Qxg6+</code></td><td><code>...hxg6</code> — h-pawn takes your queen</td><td>Reject — lose queen</td></tr>
+      <tr><td><code>Qxd5+</code></td><td><code>...cxd5</code> — c-pawn takes your queen</td><td>Reject — lose queen</td></tr>
+      <tr><td><code>hxg6</code></td><td>no queen trade</td><td>Play it — stay ahead safely</td></tr>
+    </tbody>
+  </table>
+
+  <p>Quiet pawn captures often beat flashy queen checks when the take-back is ugly. You already proved you can do this math — the habit is running it <em>every</em> time you eye a check-capture.</p>
+
+  <h2>2. Queen path scan (Threats step)</h2>
+
+  <p>Lesson 3 covers <strong>Captures</strong> on your chain. This covers <strong>Threats</strong> when you've pushed flank pawns (<code>a3</code>, <code>b3</code>) or broken with <code>d4</code>:</p>
+
+  <div class="drill-box queen">
+    b2 · d4 · a3 · h4
+    <span class="note">Threats step · 1 second each · "where can their queen land in one move?"</span>
+  </div>
+
+  <ol class="steps">
+    <li><strong>a3</strong> — flank pawn you pushed; queen on <code>d6</code> or <code>c5</code> often eyes it along the diagonal.</li>
+    <li><strong>b2</strong> — infiltration square. After <code>...Qxa3</code>, <code>...Qb2</code> is the classic follow-up.</li>
+    <li><strong>d4</strong> — center pawn after your <code>d4</code> break; queen lands here with tempo.</li>
+    <li><strong>h4</strong> — kingside entry (your win in <a href="https://lichess.org/v3TjizDT">v3TjizDT</a> started when their queen reached <code>h4</code>).</li>
+  </ol>
+
+  <p>Run this during the <strong>Threats</strong> step of <a href="0001-before-you-move.html">CCT</a> — especially when you're ahead and tempted to play a quiet retreat.</p>
+
+  <p>Print the card: <a href="../reference/two-ply-queen-paths.html">Two-Ply & Queen Paths reference</a>.</p>
+
+  <h2>3. King-safe gate before grabs</h2>
+
+  <div class="drill-box king">
+    King safe? → then grab.
+    <span class="note">Before any capture when your king hasn't castled into a corner</span>
+  </div>
+
+  <p>At move 24 in <a href="https://lichess.org/pJ7NicZ9">pJ7NicZ9</a>, <code>...Bxb2</code> won a pawn and opened <code>c3</code> — but your king was on <code>e8</code> with White's queen on <code>f3</code>. One question would have flagged it:</p>
+
+  <p><em>"Where does my king go if they check me?"</em> If you can't answer, don't grab.</p>
+
+  <h2>How it stacks on CCT</h2>
+
+  <ol class="steps">
+    <li><strong>Checks</strong> — unchanged</li>
+    <li><strong>Captures</strong> — still <code>e3 · h3 · d3</code> (<a href="0003-hippo-capture-scan.html">Lesson 3</a>)</li>
+    <li><strong>Threats</strong> — add <code>b2 · d4 · a3 · h4</code> when relevant</li>
+    <li><strong>Extra:</strong> two-ply on any check-capture; king-safe gate before material grabs</li>
+  </ol>
+
+  <h2>Practice</h2>
+  <p class="progress" id="progress">Question 1 of 6</p>
+
+  <div class="card" id="quiz-container"></div>
+
+  <div class="homework">
+    <h2>Your homework (next 3 rapid games)</h2>
+    <ol>
+      <li>Whenever you consider a <strong>capture with check</strong>, whisper <strong>"take back?"</strong> and calculate their best recapture before you click.</li>
+      <li>During the <strong>Threats</strong> step, when you have <code>a3</code>/<code>b3</code> or played <code>d4</code>, point at <strong>b2 · d4 · a3 · h4</strong> — one second each.</li>
+      <li>Before grabbing material with an <strong>uncastled king</strong>, ask <strong>"king safe?"</strong> If no, castle or defend first.</li>
+      <li>After each game, note one moment you ran two-ply or caught a queen path — or one you missed.</li>
+      <li>Bring your three games back to your teacher.</li>
+    </ol>
+  </div>
+
+  <h2>What's next</h2>
+  <p>Lesson 5 will cover <strong>king tuck</strong> — <code>Kh1</code>, <code>Rf1</code>, and when your Hippo wall is thick enough to break in the center.</p>
+
+  <p class="cite">Sources: your games <a href="https://lichess.org/o4HNxFX3">o4HNxFX3</a> · <a href="https://lichess.org/pJ7NicZ9">pJ7NicZ9</a> · <a href="https://lichess.org/v3TjizDT">v3TjizDT</a> · <a href="../reference/two-ply-queen-paths.html">reference card</a></p>
+
+  <p class="teacher-note">
+    <strong>Questions?</strong> Ask your teacher in chat — paste a position where you weren't sure if a check-capture was safe, or where a queen infiltrated.
+  </p>
+
+  <link rel="stylesheet" href="https://unpkg.com/@chrisoakman/chessboardjs@1.0.0/dist/chessboard-1.0.0.min.css">
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+  <script src="https://unpkg.com/@chrisoakman/chessboardjs@1.0.0/dist/chessboard-1.0.0.min.js"></script>
+
+  <script>
+    const quizzes = [
+      {
+        prompt: "Move 34, your game vs shivasm. You're ahead an exchange. You consider Qxg6+. What is Black's best recapture that punishes you?",
+        fen: "5rk1/pp5p/2pq2p1/3p2QP/3P4/PP6/2P2PB1/1R4K1 w - - 1 34",
+        caption: "Before 34. — from o4HNxFX3",
+        orientation: "white",
+        options: [
+          { text: "...hxg6 — the h-pawn takes your queen on g6", correct: true },
+          { text: "...Kh8 — the king sidesteps and you keep your queen", correct: false },
+          { text: "...Qxg6 — queens trade and you recapture with hxg6", correct: false },
+          { text: "...Rf7 — rook blocks", correct: false }
+        ],
+        explain: "You calculated this correctly in review. After Qxg6+ hxg6 hxg6 you lose your queen and drop from winning to losing. ...Kh8 is playable for Black but ...hxg6 is the punishing recapture you must see before you click."
+      },
+      {
+        prompt: "Same position — you rejected the check-captures. Which move keeps your advantage without risking a queen trade?",
+        fen: "5rk1/pp5p/2pq2p1/3p2QP/3P4/PP6/2P2PB1/1R4K1 w - - 1 34",
+        caption: "Still move 34 — o4HNxFX3",
+        orientation: "white",
+        options: [
+          { text: "hxg6 — pawn takes pawn, no queen trade", correct: true },
+          { text: "Qg3 — quiet queen retreat", correct: false },
+          { text: "Qxd5+ — check-capture on d5", correct: false },
+          { text: "a4 — flank pawn push", correct: false }
+        ],
+        explain: "hxg6 wins a pawn and stays comfortably ahead. Qg3 is what you played — it allowed ...Qxa3 and the infiltration that followed. Quiet pawn captures beat bad check-captures."
+      },
+      {
+        prompt: "You played 34. Qg3 anyway. Black's queen is on d6. What does Black play immediately?",
+        fen: "5rk1/pp5p/2pq2p1/3p2QP/3P4/PP6/2P2PB1/1R4K1 w - - 1 34",
+        caption: "After 34. Qg3 — queen path to a3",
+        orientation: "white",
+        options: [
+          { text: "...Qxa3 — queen takes your a3 pawn along the diagonal", correct: true },
+          { text: "...Qxg3 — queen trades on g3", correct: false },
+          { text: "...Rf7 — rook defends", correct: false },
+          { text: "...hxg6 — pawn takes on g6", correct: false }
+        ],
+        explain: "The queen on d6 eyes a3 in one move. Your a3 pawn was pushed in the opening — exactly the flank target the queen path scan catches. After ...Qxa3 the queen is inside your position."
+      },
+      {
+        prompt: "After 34...Qxa3 35. Re1, where does Black's queen go next to keep infiltrating?",
+        fen: "5rk1/pp5p/2p3p1/3p3P/3P4/qP4Q1/2P2PB1/4R1K1 b - - 1 35",
+        caption: "After 35. Re1 — from o4HNxFX3",
+        orientation: "white",
+        options: [
+          { text: "...Qb2 — queen hops to the infiltration square", correct: true },
+          { text: "...Qxd3 — queen takes d3", correct: false },
+          { text: "...Qg3 — queen trades", correct: false },
+          { text: "...Qa2 — queen retreats", correct: false }
+        ],
+        explain: "b2 is the classic infiltration square after ...Qxa3. From b2 the queen eyes d4, d1, and your back rank. This is why the queen path scan includes b2 — not just the pawn that was taken."
+      },
+      {
+        prompt: "Move 24, your game as Black vs Eadiebee. You see the hanging b2 pawn. Before ...Bxb2, what must you verify first?",
+        fen: "3rk1nr/3n1pb1/p2Bp2p/2N3p1/QpP5/5qP1/PP4NP/R3K1R1 b Qk - 1 24",
+        caption: "Before 24...Bxb2 — from pJ7NicZ9",
+        orientation: "black",
+        options: [
+          { text: "Is my king safe on e8 if they check me?", correct: true },
+          { text: "Can I recapture on b2 if they take my bishop?", correct: false },
+          { text: "Is the b2 pawn protected?", correct: false },
+          { text: "Can their queen reach d3?", correct: false }
+        ],
+        explain: "You saw the pawn — that part worked. The king-safe gate failed: your king never castled, White's queen is on f3, and ...Bc3+ led to a king walk you couldn't stop. 'King safe? → then grab.'"
+      },
+      {
+        prompt: "During CCT, when do you run the queen path scan (b2 · d4 · a3 · h4)?",
+        fen: null,
+        options: [
+          { text: "Threats step — when you have a3/b3 flank pawns or played d4", correct: true },
+          { text: "Every move instead of e3-h3-d3", correct: false },
+          { text: "Only when you're losing", correct: false },
+          { text: "Only in the opening, first 10 moves", correct: false }
+        ],
+        explain: "e3-h3-d3 stays on Captures (Lesson 3). Queen paths go on Threats — especially when ahead and considering quiet moves. Two drills, two CCT steps, no overlap."
+      }
+    ];
+
+    let current = 0;
+    let board = null;
+
+    function destroyBoard() {
+      if (board) {
+        board.destroy();
+        board = null;
+      }
+    }
+
+    function renderQuiz() {
+      const q = quizzes[current];
+      destroyBoard();
+      document.getElementById('progress').textContent = `Question ${current + 1} of ${quizzes.length}`;
+      const container = document.getElementById('quiz-container');
+      container.innerHTML = `
+        <p class="quiz-question">${q.prompt}</p>
+        ${q.fen ? `
+          <div class="board-wrap">
+            <p class="board-caption">${q.caption || ''}</p>
+            <div id="board"></div>
+          </div>` : ''}
+        <div class="options" id="options"></div>
+        <div class="feedback" id="feedback"></div>
+      `;
+      if (q.fen) {
+        requestAnimationFrame(() => {
+          board = Chessboard('board', {
+            position: q.fen,
+            orientation: q.orientation || 'white',
+            draggable: false,
+            showNotation: true,
+            pieceTheme: '../assets/chesspieces/wikipedia/{piece}.png'
+          });
+          board.resize();
+        });
+      }
+      const optionsEl = document.getElementById('options');
+      q.options.forEach((opt, i) => {
+        const btn = document.createElement('button');
+        btn.className = 'option';
+        btn.textContent = opt.text;
+        btn.onclick = () => answer(i);
+        optionsEl.appendChild(btn);
+      });
+    }
+
+    function answer(i) {
+      const q = quizzes[current];
+      const buttons = document.querySelectorAll('.option');
+      const feedback = document.getElementById('feedback');
+      buttons.forEach((btn, j) => {
+        btn.disabled = true;
+        if (q.options[j].correct) btn.classList.add('correct');
+        else if (j === i) btn.classList.add('incorrect');
+      });
+      const ok = q.options[i].correct;
+      feedback.className = 'feedback show ' + (ok ? 'good' : 'bad');
+      feedback.innerHTML = (ok ? '✓ Correct. ' : '✗ Not quite. ') + q.explain +
+        (current < quizzes.length - 1
+          ? ' <br><br><button onclick="nextQuiz()" style="margin-top:0.75rem;font-family:inherit;padding:0.5rem 1rem;cursor:pointer;">Next question →</button>'
+          : ' <br><br><strong>Lesson complete.</strong> Play 3 rapid games with two-ply + queen paths, then tell your teacher.');
+    }
+
+    function nextQuiz() {
+      current++;
+      renderQuiz();
+    }
+
+    renderQuiz();
+  </script>
+</body>
+</html>
