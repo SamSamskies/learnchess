@@ -157,7 +157,7 @@
   <h1>King Tuck & Center Breaks</h1>
   <p class="meta">Lesson 5 · ~12 minutes · Skill: tuck the king before you punch in the center</p>
 
-  <p>Lesson 4 homework: two wins, one demolition. Games 1 and 2 show your new filters working — queen path at move 16, two-ply at move 56. Game 3 was an opening collapse after <code>12. Bxe6</code>, before any middlegame habit could help.</p>
+  <p>Lesson 4 homework: two wins, one demolition. Games 1 and 2 show your new filters working — queen path at move 16, two-ply at move 56. Game 3 held together in the opening but cracked at <code>12. Bxe6</code> — a center capture, not an opening mistake.</p>
 
   <p>This lesson covers what game 1 got right and game 3 needed earlier: <strong>where the king goes before you break in the center</strong>.</p>
 
@@ -183,20 +183,22 @@
 
   <h2>3. Qf3 gate (from game 3)</h2>
 
-  <p>Against <code>3. Qf3</code>, <code>3...e6</code> alone leaves <code>f7</code> thin and invites <code>Bxe6</code> later. The gate:</p>
+  <p><code>3. Qf3</code> threatens <code>Qxf7#</code> — the queen and the <code>c4</code> bishop both hit <code>f7</code>, and only your king defends it. The clean answer is <code>3...e6</code>: it blocks the bishop's diagonal, so the mate is off. That's exactly what you played, and it was correct. The game did <em>not</em> go wrong at move 3.</p>
 
   <table class="compact">
     <thead>
       <tr><th>They play</th><th>You answer</th><th>Why</th></tr>
     </thead>
     <tbody>
-      <tr><td><code>3. Qf3</code></td><td><code>...Nf6</code></td><td>Blocks f7; develops with tempo</td></tr>
-      <tr><td><code>4. e5</code></td><td><code>...Ng8</code> or <code>...d5</code></td><td>Hippo retreat — don't grab blindly</td></tr>
-      <tr><td>Before <code>...c5</code>/<code>...e5</code></td><td>Scan <strong>e6</strong> on Captures</td><td>Is their bishop on the e6 square?</td></tr>
+      <tr><td><code>3. Qf3</code> (threatens <code>Qxf7#</code>)</td><td><code>...e6</code></td><td>Blocks the <code>c4–f7</code> diagonal; the mate is gone</td></tr>
+      <tr><td>Developing the king's knight</td><td><code>...Ne7</code>, not <code>...Nf6</code></td><td>On <code>f6</code> the knight gets kicked by <code>e5</code>; from <code>e7</code> it can't be hit</td></tr>
+      <tr><td>Before <code>...c5</code>/<code>...e5</code></td><td>Scan <strong>e6</strong> on Captures</td><td>The bishop still eyes <code>e6</code> — watch for the <code>Bxe6</code> sac</td></tr>
     </tbody>
   </table>
 
-  <p>In <a href="https://lichess.org/lcdaCOns">lcdaCOns</a>, <code>12. Bxe6</code> was a <strong>Captures</strong> hit on your own pawn — the same chain logic as Lesson 3, but the target is <code>e6</code> instead of <code>e3</code>.</p>
+  <p>Why not <code>3...Nf6</code>? It blocks the f-file, so it stops the mate too — but <code>4. e5</code> immediately kicks the knight, and now you're shuffling it (back to <code>g8</code>, or into <code>...Nd5</code> and <code>Bxd5</code>) while White gains free tempo. Keep the knight headed for <code>e7</code> instead, where <code>e5</code> can't touch it.</p>
+
+  <p>The real mistake in <a href="https://lichess.org/lcdaCOns">lcdaCOns</a> came much later: <code>12. Bxe6</code> was a <strong>Captures</strong> hit on your own pawn — the same chain logic as Lesson 3, but the target is <code>e6</code> instead of <code>e3</code>. Once you have a pawn on <code>e6</code> and their bishop aims at it, <code>e6</code> lives on your Captures scan for the rest of the game.</p>
 
   <h2>4. White Hippo tuck (brief)</h2>
 
@@ -220,7 +222,7 @@
     <h2>Your homework (next 3 rapid games)</h2>
     <ol>
       <li>Before any <strong>...e5</strong> or <strong>...c5</strong> as Black, ask: <strong>"king tucked?"</strong> If the queen or bishop still eyes <code>g8</code>, play <code>...Kh8</code> or <code>...Kh7</code> first.</li>
-      <li>Against <strong>3. Qf3</strong>, open with <strong>...Nf6</strong> — not <code>...e6</code> alone.</li>
+      <li>Against <strong>3. Qf3</strong>, play <strong>...e6</strong> to kill the <code>Qxf7#</code> threat — then develop the knight to <strong>...Ne7</strong>, not <code>...Nf6</code>, so <code>e5</code> can't kick it.</li>
       <li>When you have an <strong>e6</strong> pawn and their bishop aims at it, add <strong>e6</strong> to your Captures scan.</li>
       <li>After each game, note one tuck you played — or one center break you played too early.</li>
       <li>Bring your three games back to your teacher.</li>
@@ -269,17 +271,17 @@
         explain: "Your homework note was spot-on. Queen path scan + count defenders = green light for the rook lift."
       },
       {
-        prompt: "Game 3 vs zag123_ga. White plays 3. Qf3. Best Hippo-friendly response?",
-        fen: "rnbqkbnr/pppp1pp1/4p3/8/4P3/8/PPPP1PPP/RNBQKBNR b KQkq - 1 3",
-        caption: "After 3. Qf3 — lcdaCOns opening",
+        prompt: "Game 3 vs zag123_ga. White plays 3. Qf3, threatening Qxf7#. Best response?",
+        fen: "rnbqk1nr/ppppppbp/6p1/8/2B1P3/5Q2/PPPP1PPP/RNB1K1NR b KQkq - 1 3",
+        caption: "After 3. Qf3 (Qxf7# threatened) — lcdaCOns opening",
         orientation: "black",
         options: [
-          { text: "...Nf6 — develop and guard f7", correct: true },
-          { text: "...e6 — block the bishop but weaken f7", correct: false },
-          { text: "...d5 — grab space in the center", correct: false },
+          { text: "...e6 — block the c4–f7 diagonal; the mate is off", correct: true },
+          { text: "...Nf6 — blocks the f-file, but 4. e5 kicks it", correct: false },
+          { text: "...d5 — grab space, but f7 is still mated", correct: false },
           { text: "...Bg4 — pin the knight on f3", correct: false }
         ],
-        explain: "...e6 alone is what you played — it invites Bxe6 later. ...Nf6 is the standard block; Hippo players often follow with ...d6 and ...g6."
+        explain: "...e6 is what you played, and it was correct — it kills the f7 mate. The opening wasn't the problem; the loss came from the later Bxe6 sac (next question). Just develop the knight to e7, not f6, so e4–e5 can't kick it. (...d5 loses to Qxf7#; the bishop and queen still hit f7.)"
       },
       {
         prompt: "Game 3, move 12. White plays Bxe6. Which Captures scan square should have flagged this one move earlier?",
