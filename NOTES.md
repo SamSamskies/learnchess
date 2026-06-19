@@ -45,3 +45,11 @@
 - **Reflection:** Scan stayed &lt;3 sec, no time pressure — clock/scan habits holding.
 - **Game 1:** User correctly saw `Qxg6+`/`Qxd5+` lose queen to pawn recapture (`hxg6`, `cxd5`). Teacher correction applied. Real miss was `Qg3` + queen infiltration; `hxg6` was the simple win.
 - **Game 2:** `...Bxb2` was deliberate (hanging pawn + open c3); missed king-on-e8 audit, not scan miss.
+
+## Homework observations (Lesson 4)
+
+- **Game 1 (UC1l19yg):** Queen path scan before `16...Rac8` — verified `h3` defended, rook lift safe. `12...Kh7` king tuck before `...e5`. Won on time from winning position (`29...Rc2`).
+- **Game 2 (ABwWLPy1):** Two-ply on `56. Rxf7+` — correct check-capture sequence in winning rook endgame. Hungarian win vs 1400.
+- **Game 3 (lcdaCOns):** Opening collapse after `3...e6` vs `Qf3` and `12. Bxe6` — not a Lesson 4 miss; **Captures** on own `e6` pawn + Qf3 response gap.
+- **Pattern:** Two-ply and queen paths land when ahead/stable; opening tactical collapses bypass the new filters entirely.
+- Rating climbed to ~1333 across the batch.

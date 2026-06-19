@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lesson 5 — King Tuck & Center Breaks</title>
+  <style>
+    :root {
+      --bg: #faf8f5;
+      --ink: #1a1a1a;
+      --accent: #2d5a27;
+      --accent-light: #eef4ec;
+      --wrong: #8b2942;
+      --wrong-bg: #fdf0f3;
+      --right: #1e5631;
+      --right-bg: #edf7f0;
+      --muted: #5c5c5c;
+      --card: #fff;
+      --border: #e0dcd4;
+      --warn: #7a5c00;
+      --warn-bg: #fff9e6;
+    }
+    * { box-sizing: border-box; }
+    body {
+      font-family: "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif;
+      background: var(--bg);
+      color: var(--ink);
+      line-height: 1.6;
+      max-width: 44rem;
+      margin: 0 auto;
+      padding: 2rem 1.25rem 4rem;
+    }
+    h1 { font-size: 2rem; font-weight: 600; line-height: 1.2; margin-bottom: 0.5rem; }
+    .meta { color: var(--muted); font-size: 0.9rem; margin-bottom: 2rem; }
+    h2 { font-size: 1.25rem; margin: 2rem 0 0.75rem; color: var(--accent); }
+    p { margin: 0 0 1rem; }
+    a { color: var(--accent); }
+    .card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 1.5rem;
+      margin: 1.25rem 0;
+    }
+    .drill-box {
+      text-align: center;
+      font-size: 1.2rem;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      padding: 1.25rem;
+      border-radius: 8px;
+      margin: 1rem 0;
+    }
+    .drill-box.tuck {
+      background: var(--accent-light);
+      border: 1px solid #c5d9c0;
+      color: var(--accent);
+    }
+    .drill-box.wall {
+      background: var(--warn-bg);
+      border: 1px solid #e8d9a8;
+      color: var(--warn);
+    }
+    .drill-box .note {
+      display: block;
+      font-size: 0.85rem;
+      font-weight: 400;
+      letter-spacing: 0;
+      color: var(--muted);
+      margin-top: 0.5rem;
+    }
+    .board-wrap {
+      max-width: 360px;
+      margin: 1rem auto 1.25rem;
+    }
+    .board-caption {
+      text-align: center;
+      font-size: 0.9rem;
+      color: var(--muted);
+      margin-bottom: 0.5rem;
+    }
+    #board { width: 100%; }
+    .quiz-question { font-weight: 600; margin-bottom: 1rem; }
+    .options { display: flex; flex-direction: column; gap: 0.5rem; }
+    button.option {
+      font-family: inherit;
+      font-size: 1rem;
+      text-align: left;
+      padding: 0.75rem 1rem;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      background: var(--card);
+      cursor: pointer;
+      transition: border-color 0.15s, background 0.15s;
+    }
+    button.option:hover:not(:disabled) { border-color: var(--accent); background: var(--accent-light); }
+    button.option:disabled { cursor: default; }
+    button.option.correct { border-color: var(--right); background: var(--right-bg); }
+    button.option.incorrect { border-color: var(--wrong); background: var(--wrong-bg); }
+    .feedback {
+      margin-top: 1rem;
+      padding: 1rem;
+      border-radius: 6px;
+      display: none;
+    }
+    .feedback.show { display: block; }
+    .feedback.good { background: var(--right-bg); border-left: 4px solid var(--right); }
+    .feedback.bad { background: var(--wrong-bg); border-left: 4px solid var(--wrong); }
+    .homework {
+      background: var(--warn-bg);
+      border: 1px solid #e8d9a8;
+      border-radius: 10px;
+      padding: 1.5rem;
+      margin: 2rem 0;
+    }
+    .homework h2 { margin-top: 0; color: var(--warn); }
+    .cite { font-size: 0.85rem; color: var(--muted); }
+    .progress { font-size: 0.9rem; color: var(--muted); margin-bottom: 1rem; }
+    .teacher-note {
+      border-top: 1px solid var(--border);
+      margin-top: 2.5rem;
+      padding-top: 1.5rem;
+      font-size: 0.95rem;
+      color: var(--muted);
+    }
+    .lesson-nav {
+      font-size: 0.9rem;
+      color: var(--muted);
+      margin-bottom: 1.5rem;
+    }
+    ol.steps { margin: 0; padding-left: 1.25rem; }
+    ol.steps li { margin-bottom: 0.5rem; }
+    table.compact {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.95rem;
+      margin: 1rem 0;
+    }
+    table.compact th, table.compact td {
+      text-align: left;
+      padding: 0.5rem 0.6rem;
+      border-bottom: 1px solid var(--border);
+    }
+    table.compact th { color: var(--accent); }
+  </style>
+</head>
+<body>
+
+  <p class="lesson-nav">
+    <a href="0001-before-you-move.html">Lesson 1: CCT</a> ·
+    <a href="0002-clock-budgeting.html">Lesson 2: Clock</a> ·
+    <a href="0003-hippo-capture-scan.html">Lesson 3: Captures</a> ·
+    <a href="0004-two-ply-and-queen-paths.html">Lesson 4: Two-Ply</a> ·
+    Lesson 5
+  </p>
+
+  <h1>King Tuck & Center Breaks</h1>
+  <p class="meta">Lesson 5 · ~12 minutes · Skill: tuck the king before you punch in the center</p>
+
+  <p>Lesson 4 homework: two wins, one demolition. Games 1 and 2 show your new filters working — queen path at move 16, two-ply at move 56. Game 3 was an opening collapse after <code>12. Bxe6</code>, before any middlegame habit could help.</p>
+
+  <p>This lesson covers what game 1 got right and game 3 needed earlier: <strong>where the king goes before you break in the center</strong>.</p>
+
+  <h2>1. King tuck (Black Modern / Hippo)</h2>
+
+  <p>When you've castled kingside and White's queen sits on <code>d2</code> or <code>f3</code> with a bishop on <code>c4</code>/<code>a2</code>, your king on <code>g8</code> sits on the same diagonal as <code>e6</code>. Before you play <code>...e5</code> or open the center, tuck:</p>
+
+  <div class="drill-box tuck">
+    Kh8 · Kh7
+    <span class="note">Before ...e5 or ...c5 when Q+B aim at your kingside · ~2 seconds</span>
+  </div>
+
+  <p>In <a href="https://lichess.org/UC1l19yg">UC1l19yg</a> you played <code>12...Kh7</code> — exactly this. White's queen was on <code>d2</code>, bishop on <code>b3</code> heading to <code>a2</code>. Only after the tuck did you prepare <code>...e5</code> and lift the rook with <code>...Rac8</code>.</p>
+
+  <h2>2. The wall test — when is the break safe?</h2>
+
+  <div class="drill-box wall">
+    g6 · h6 · f7 · e7 — all still there?
+    <span class="note">If yes, center break is on the menu. If a pawn moved, re-check king tuck first.</span>
+  </div>
+
+  <p>Your Hippo pawn wall (<code>g6/h6/d6/e6</code> as Black) is what makes patience work. You can wait, tuck the king, then strike with <code>...e5</code> or <code>...c5</code> when White overextends. If you've already pushed <code>...f5</code> or traded on <code>e6</code>, the wall is cracked — don't break until you've recalculated.</p>
+
+  <h2>3. Qf3 gate (from game 3)</h2>
+
+  <p>Against <code>3. Qf3</code>, <code>3...e6</code> alone leaves <code>f7</code> thin and invites <code>Bxe6</code> later. The gate:</p>
+
+  <table class="compact">
+    <thead>
+      <tr><th>They play</th><th>You answer</th><th>Why</th></tr>
+    </thead>
+    <tbody>
+      <tr><td><code>3. Qf3</code></td><td><code>...Nf6</code></td><td>Blocks f7; develops with tempo</td></tr>
+      <tr><td><code>4. e5</code></td><td><code>...Ng8</code> or <code>...d5</code></td><td>Hippo retreat — don't grab blindly</td></tr>
+      <tr><td>Before <code>...c5</code>/<code>...e5</code></td><td>Scan <strong>e6</strong> on Captures</td><td>Is their bishop on the e6 square?</td></tr>
+    </tbody>
+  </table>
+
+  <p>In <a href="https://lichess.org/lcdaCOns">lcdaCOns</a>, <code>12. Bxe6</code> was a <strong>Captures</strong> hit on your own pawn — the same chain logic as Lesson 3, but the target is <code>e6</code> instead of <code>e3</code>.</p>
+
+  <h2>4. White Hippo tuck (brief)</h2>
+
+  <p>As White in the Hungarian, the mirror moves are <code>Kh1</code> and <code>Rf1</code> — tuck the king off the <code>g1</code> diagonal before you play <code>f4</code> or open the e-file. You'll see this in future homework when you're White.</p>
+
+  <h2>How it stacks</h2>
+
+  <ol class="steps">
+    <li><strong>CCT</strong> — unchanged</li>
+    <li><strong>Captures</strong> — <code>e3 · h3 · d3</code> (White) or <code>e6 · f7 · g6</code> (Black) when relevant</li>
+    <li><strong>Threats</strong> — queen paths when flank pawns pushed</li>
+    <li><strong>Before center break</strong> — king tuck + wall test</li>
+  </ol>
+
+  <h2>Practice</h2>
+  <p class="progress" id="progress">Question 1 of 5</p>
+
+  <div class="card" id="quiz-container"></div>
+
+  <div class="homework">
+    <h2>Your homework (next 3 rapid games)</h2>
+    <ol>
+      <li>Before any <strong>...e5</strong> or <strong>...c5</strong> as Black, ask: <strong>"king tucked?"</strong> If the queen or bishop still eyes <code>g8</code>, play <code>...Kh8</code> or <code>...Kh7</code> first.</li>
+      <li>Against <strong>3. Qf3</strong>, open with <strong>...Nf6</strong> — not <code>...e6</code> alone.</li>
+      <li>When you have an <strong>e6</strong> pawn and their bishop aims at it, add <strong>e6</strong> to your Captures scan.</li>
+      <li>After each game, note one tuck you played — or one center break you played too early.</li>
+      <li>Bring your three games back to your teacher.</li>
+    </ol>
+  </div>
+
+  <h2>What's next</h2>
+  <p>Lesson 6 will cover <strong>confirm-the-square</strong> — making sure the piece you click is the one you calculated (your Lesson 2 misclick pattern).</p>
+
+  <p class="cite">Sources: your games <a href="https://lichess.org/UC1l19yg">UC1l19yg</a> · <a href="https://lichess.org/lcdaCOns">lcdaCOns</a> · <a href="../reference/two-ply-queen-paths.html">Lesson 4 reference</a></p>
+
+  <p class="teacher-note">
+    <strong>Questions?</strong> Ask your teacher in chat — paste a position where you weren't sure whether to tuck or break.
+  </p>
+
+  <link rel="stylesheet" href="https://unpkg.com/@chrisoakman/chessboardjs@1.0.0/dist/chessboard-1.0.0.min.css">
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+  <script src="https://unpkg.com/@chrisoakman/chessboardjs@1.0.0/dist/chessboard-1.0.0.min.js"></script>
+
+  <script>
+    const quizzes = [
+      {
+        prompt: "Game 1 vs marco1077. You're Black. White just played 12. Qd2. What do you play before preparing ...e5?",
+        fen: "r2q1rk1/1bpnnpb1/p2pp1pp/1p6/4PB2/PBNP1N1P/1PPQ1PP1/R3R1K1 b - - 3 12",
+        caption: "Before 12...Kh7 — UC1l19yg",
+        orientation: "black",
+        options: [
+          { text: "...Kh7 — tuck the king off the diagonal first", correct: true },
+          { text: "...e5 — strike in the center immediately", correct: false },
+          { text: "...Ng8 — retreat the knight to the back rank", correct: false },
+          { text: "...Qe7 — develop the queen to the center", correct: false }
+        ],
+        explain: "You played this in the game. White's Qd2 + Bb3 (heading to a2) eyes your kingside. Kh7 tucks before ...e5 on move 15."
+      },
+      {
+        prompt: "Same game, move 16. Before ...Rac8, you ran the queen path scan. Why is ...Rac8 safe here?",
+        fen: "r4rn1/1bpnqpbk/p2p2pp/1p2p3/4P3/P1PP1N1P/BP1QNPPB/R3R1K1 b - - 1 16",
+        caption: "Before 16...Rac8 — UC1l19yg",
+        orientation: "black",
+        options: [
+          { text: "h3 is defended three ways — no queen grab on h3", correct: true },
+          { text: "White's queen cannot ever reach b2 from d2", correct: false },
+          { text: "Rac8 checks White's king immediately", correct: false },
+          { text: "The rook on c8 captures a pawn on c3", correct: false }
+        ],
+        explain: "Your homework note was spot-on. Queen path scan + count defenders = green light for the rook lift."
+      },
+      {
+        prompt: "Game 3 vs zag123_ga. White plays 3. Qf3. Best Hippo-friendly response?",
+        fen: "rnbqkbnr/pppp1pp1/4p3/8/4P3/8/PPPP1PPP/RNBQKBNR b KQkq - 1 3",
+        caption: "After 3. Qf3 — lcdaCOns opening",
+        orientation: "black",
+        options: [
+          { text: "...Nf6 — develop and guard f7", correct: true },
+          { text: "...e6 — block the bishop but weaken f7", correct: false },
+          { text: "...d5 — grab space in the center", correct: false },
+          { text: "...Bg4 — pin the knight on f3", correct: false }
+        ],
+        explain: "...e6 alone is what you played — it invites Bxe6 later. ...Nf6 is the standard block; Hippo players often follow with ...d6 and ...g6."
+      },
+      {
+        prompt: "Game 3, move 12. White plays Bxe6. Which Captures scan square should have flagged this one move earlier?",
+        fen: "r2qk2r/1b1nnpb1/p2pp1pp/1pp5/3PPN2/1BN1BQ2/PPP2PPP/R4RK1 w kq - 0 12",
+        caption: "Before 12. Bxe6 — lcdaCOns",
+        orientation: "white",
+        options: [
+          { text: "e6 — your pawn on e6 is a bishop capture target", correct: true },
+          { text: "h3 — the kingside chain pawn from Lesson 3", correct: false },
+          { text: "b2 — queen infiltration square from Lesson 4", correct: false },
+          { text: "f7 — the king is still on e8 so f7 is irrelevant", correct: false }
+        ],
+        explain: "Lesson 3 taught e3-h3-d3 for White. As Black with ...e6 on the board, e6 belongs on your Captures scan when Bc4 or Be3 aims at it."
+      },
+      {
+        prompt: "When is ...e5 safe after you've played ...g6, ...Bg7, ...d6, ...Nd7, and castled?",
+        fen: null,
+        options: [
+          { text: "After Kh8 or Kh7 — king tucked off the Q+B diagonal", correct: true },
+          { text: "Immediately on move 6 — speed beats safety", correct: false },
+          { text: "Only when you're down material and must counterattack", correct: false },
+          { text: "Never — Hippo players never play ...e5", correct: false }
+        ],
+        explain: "Game 1: Kh7 on 12, e5 on 15. The wall was intact and the king was tucked. That's the template."
+      }
+    ];
+
+    let current = 0;
+    let board = null;
+
+    function destroyBoard() {
+      if (board) {
+        board.destroy();
+        board = null;
+      }
+    }
+
+    function renderQuiz() {
+      const q = quizzes[current];
+      destroyBoard();
+      document.getElementById('progress').textContent = `Question ${current + 1} of ${quizzes.length}`;
+      const container = document.getElementById('quiz-container');
+      container.innerHTML = `
+        <p class="quiz-question">${q.prompt}</p>
+        ${q.fen ? `
+          <div class="board-wrap">
+            <p class="board-caption">${q.caption || ''}</p>
+            <div id="board"></div>
+          </div>` : ''}
+        <div class="options" id="options"></div>
+        <div class="feedback" id="feedback"></div>
+      `;
+      if (q.fen) {
+        requestAnimationFrame(() => {
+          board = Chessboard('board', {
+            position: q.fen,
+            orientation: q.orientation || 'white',
+            draggable: false,
+            showNotation: true,
+            pieceTheme: '../assets/chesspieces/wikipedia/{piece}.png'
+          });
+          board.resize();
+        });
+      }
+      const optionsEl = document.getElementById('options');
+      q.options.forEach((opt, i) => {
+        const btn = document.createElement('button');
+        btn.className = 'option';
+        btn.textContent = opt.text;
+        btn.onclick = () => answer(i);
+        optionsEl.appendChild(btn);
+      });
+    }
+
+    function answer(i) {
+      const q = quizzes[current];
+      const buttons = document.querySelectorAll('.option');
+      const feedback = document.getElementById('feedback');
+      buttons.forEach((btn, j) => {
+        btn.disabled = true;
+        if (q.options[j].correct) btn.classList.add('correct');
+        else if (j === i) btn.classList.add('incorrect');
+      });
+      const ok = q.options[i].correct;
+      feedback.className = 'feedback show ' + (ok ? 'good' : 'bad');
+      feedback.innerHTML = (ok ? '✓ Correct. ' : '✗ Not quite. ') + q.explain +
+        (current < quizzes.length - 1
+          ? ' <br><br><button onclick="nextQuiz()" style="margin-top:0.75rem;font-family:inherit;padding:0.5rem 1rem;cursor:pointer;">Next question →</button>'
+          : ' <br><br><strong>Lesson complete.</strong> Play 3 rapid games with king tuck + Qf3 gate, then tell your teacher.');
+    }
+
+    function nextQuiz() {
+      current++;
+      renderQuiz();
+    }
+
+    renderQuiz();
+  </script>
+</body>
+</html>
